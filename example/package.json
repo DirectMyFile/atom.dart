@@ -1,0 +1,15 @@
+{
+  "name": "dart-example",
+  "version": "0.1.0",
+  "description": "Write Atom Packages in Dart",
+  "repository": "https://github.com/DirectMyFile/atom.dart",
+  "main": "lib/index.js",
+  "license": "MIT",
+  "engines": {
+    "atom": ">0.50.0"
+  },
+  "scripts": {
+    "build": "dart build.dart"
+  },
+  "dependencies": {}
+}

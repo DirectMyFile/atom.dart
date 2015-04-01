@@ -1,0 +1,14 @@
+build/
+packages
+pubspec.lock
+.idea/
+docs/
+dartdoc-viewer/
+.project
+.settings
+.buildlog
+.pub
+out/
+.c9*
+example/lib/index.js
+example/lib/index.js.map
