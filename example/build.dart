@@ -2,13 +2,59 @@ import "dart:async";
 import "dart:io";
 import "dart:convert";
 
-const List<String> scripts = const [
-  "lib/index.dart"
-];
+final List<String> scripts = [];
+bool isDevEnabled = false;
 
-main() async {
+main(List<String> args) async {
+  isDevEnabled = args.contains("--dev") || args.contains("-d");
+
+  await findScripts();
   await compile();
   await cleanup();
+  await checkPackageJson();
+}
+
+findScripts() async {
+  var dir = new Directory("lib");
+  scripts.addAll(
+    await dir.list(recursive: true)
+      .where((it) => it is File && it.path.endsWith(".dart"))
+      .map((it) => it.path.replaceAll(dir.parent.path + "/", ""))
+      .where((it) => !it.contains("packages/"))
+      .toList()
+  );
+
+  var a = [];
+  for (var p in scripts) {
+    var f = new File(p);
+    if ((await f.readAsString()).trim().startsWith("part of")) {
+      a.add(p);
+    }
+  }
+  scripts.removeWhere((it) => a.contains(it));
+}
+
+checkPackageJson() async {
+  var pkg;
+  try {
+    pkg = await loadPackageJson();
+  } on FormatException catch (e) {
+    print("[package.json] Syntax Error: ${e.toString()}");
+    exit(1);
+  }
+
+  var hasErrors = false;
+  var main = pkg["main"] != null ? pkg["main"] : "index.js";
+
+  var mainScript = new File(main);
+  if (!await mainScript.exists()) {
+    print("[package.json] ERROR: Unknown Main Script: ${main}");
+    hasErrors = true;
+  }
+
+  if (hasErrors) {
+    exit(1);
+  }
 }
 
 Future<dynamic> loadPackageJson([String path = "package.json"]) async {
@@ -61,7 +107,10 @@ cleanup({bool includeScripts: false}) async {
   var files = scripts
     .map(getJsName)
     .expand((it) =>
-      ["${it}.deps"]..addAll(includeScripts ? [it, "${it}.map"] : []));
+      ["${it}.deps"]
+        ..addAll(includeScripts ? [it] : [])
+        ..addAll((includeScripts && !isDevEnabled) ? ["${it}.map"] : [])
+    );
   for (var name in files) {
     var file =  new File(name);
     if (await file.exists()) {

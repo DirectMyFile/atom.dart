@@ -1,4 +1,8 @@
+library atom.example;
+
 import "package:atom/atom.dart";
+
+part "activate.dart";
 
 void main() {
   exports.activate = activate;
@@ -6,10 +10,4 @@ void main() {
   exports.deactivate = () {
     print("Package Deactivated");
   };
-}
-
-void activate() {
-  atom.workspace.observeTextEditors((editor) {
-    print("Text Editor Opened");
-  });
 }
