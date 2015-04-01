@@ -29,6 +29,9 @@ class ModuleExports {
   set deactivate(Action function) {
     obj["deactivate"] = function;
   }
+
+  js.JsObject get config => obj["config"];
+  set config(input) => obj["config"] = toJsObject(input);
 }
 
 class Atom {
@@ -36,7 +39,11 @@ class Atom {
 
   final CommandRegistry commands = new CommandRegistry();
 
-  Atom();
+  Atom() {
+    workspace = new Workspace(o["workspace"]);
+  }
+
+  Workspace workspace;
 
   void open(List<String> paths, {bool newWindow, bool devMode, bool safeMode}) {
     var opts = omap({
@@ -47,6 +54,12 @@ class Atom {
     });
 
     o.callMethod("open", [opts]);
+  }
+
+  void reopenItem() => o.callMethod("reopenItem");
+
+  Disposable onDidBeep(Action callback) {
+    return new Disposable(o.callMethod("onDidBeep", [callback]));
   }
 
   void close() {
@@ -74,7 +87,7 @@ class Atom {
       }
     }
 
-    o.callMethod("confirm", [
+    return o.callMethod("confirm", [
       omap({
         "message": message,
         "detailedMessage": detailedMessage,
@@ -82,6 +95,19 @@ class Atom {
       })
     ]);
   }
+
+  bool get isDevMode => o.callMethod("isDevMode");
+  bool get isSafeMode => o.callMethod("isSafeMode");
+  bool get isSpecMode => o.callMethod("isSpecMode");
+
+  String get version => o.callMethod("getVersion");
+  bool get isReleasedVersion => o.callMethod("isReleasedVersion");
+
+  num get windowLoadTime => o.callMethod("getWindowLoadTime");
+
+  void openDevTools() => o.callMethod("openDevTools");
+  void toggleDevTools() => o.callMethod("toggleDevTools");
+  void executeJavaScriptInDevTools(String code) => o.callMethod("executeJavaScriptInDevTools", [code]);
 }
 
 class WindowSize {
