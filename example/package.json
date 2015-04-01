@@ -9,7 +9,7 @@
     "atom": ">0.50.0"
   },
   "scripts": {
-    "build": "dart build.dart"
+    "prepublish": "dart build.dart"
   },
   "dependencies": {}
 }
