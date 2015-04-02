@@ -1,7 +1,9 @@
 part of atom;
 
 class CommandRegistry {
-  static final js.JsObject o = js.context["atom"]["commands"];
+  final js.JsObject o;
+
+  CommandRegistry(this.o);
 
   Disposable add(String target, String command, void callback(event)) {
     return new Disposable(

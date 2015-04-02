@@ -33,7 +33,7 @@ class TextEditor {
     obj.callMethod("insertText", [value.toString()]);
   }
 
-  void insertNewLine() => obj.callMethod("insertNewLine");
+  void insertNewLine() => obj.callMethod("insertNewline");
   void delete() => obj.callMethod("delete");
   void backspace() => obj.callMethod("backspace");
   void undo() => obj.callMethod("undo");
@@ -47,6 +47,216 @@ class TextEditor {
   Disposable onDidStopChanging(Action callback) => new Disposable(obj.callMethod("onDidStopChanging", [callback]));
   Disposable onDidSave(Action callback) => new Disposable(obj.callMethod("onDidSave", [(e) => callback()]));
   Disposable onDidDestroy(Action callback) => new Disposable(obj.callMethod("onDidDestroy", [callback]));
+
+  void transpose() {
+    obj.callMethod("transpose");
+  }
+
+  void uppercase() {
+    obj.callMethod("upperCase");
+  }
+
+  void lowercase() {
+    obj.callMethod("lowerCase");
+  }
+
+  void toggleLineCommentsInSelection() {
+    obj.callMethod("toggleLineCommentsInSelection");
+  }
+
+  void insertNewLineBelow() {
+    obj.callMethod("insertNewLineBelow");
+  }
+
+  void insertNewLineAbove() {
+    obj.callMethod("insertNewLineAbove");
+  }
+
+  void deleteLine() {
+    obj.callMethod("deleteLine");
+  }
+
+  void deleteToBeginningOfLine() {
+    obj.callMethod("deleteToBeginningOfLine");
+  }
+
+  void deleteToBeginningOfWord() {
+    obj.callMethod("deleteToBeginningOfWord");
+  }
+
+  void deleteToEndOfLine() {
+    obj.callMethod("deleteToEndOfLine");
+  }
+
+  void deleteToEndOfWord() {
+    obj.callMethod("deleteToEndOfWord");
+  }
+
+  String get encoding => obj.callMethod("getEncoding");
+  set encoding(String name) => obj.callMethod("setEncoding", [name]);
+
+  Disposable onDidAddCursor(Consumer<Cursor> callback) {
+    return new Disposable(obj.callMethod("onDidAddCursor", [
+        (e) => callback(new Cursor(e))
+    ]));
+  }
+
+  Disposable onDidRemoveCursor(Consumer<Cursor> callback) {
+    return new Disposable(obj.callMethod("onDidRemoveCursor", [
+        (e) => callback(new Cursor(e))
+    ]));
+  }
+
+  Disposable onWillInsertText(Consumer<WillInsertTextEvent> callback) {
+    return new Disposable(obj.callMethod("onWillInsertText", [
+      (e) => callback(new WillInsertTextEvent(e))
+    ]));
+  }
+
+  Disposable onDidConflict(Action callback) => new Disposable(obj.callMethod("onDidConflict", [callback]));
+  Disposable onDidInsertText(Consumer<DidInsertTextEvent> callback) => new Disposable(obj.callMethod("onDidInsertText", [
+    (e) => new DidInsertTextEvent(e)
+  ]));
+
+  Disposable onDidChangeGrammar(Consumer<Grammar> callback) {
+    return new Disposable(obj.callMethod("onDidChangeGrammar", [(e) => callback(new Grammar(e))]));
+  }
+
+  Disposable observeGrammar(Consumer<Grammar> callback) {
+    return new Disposable(obj.callMethod("observeGrammar", [(e) => callback(new Grammar(e))]));
+  }
+
+  Disposable observeCursors(Consumer<Cursor> callback) {
+    return new Disposable(obj.callMethod("observeCursors", [
+        (e) => callback(new Cursor(e))
+    ]));
+  }
+
+  bool get isSoftWrapped => obj.callMethod("isSoftWrapped");
+  set isSoftWrapped(bool value) => obj.callMethod("setSoftWrapped", [value]);
+
+  bool toggleSoftWrapped() {
+    return obj.callMethod("toggleSoftWrapped");
+  }
+
+  int get softWrapColumn => obj.callMethod("getSoftWrapColumn");
+
+  bool get softTabs => obj.callMethod("getSoftTabs");
+  set softTabs(bool value) => obj.callMethod("setSoftTabs", [value]);
+
+  bool toggleSoftTabs() {
+    return obj.callMethod("toggleSoftTabs");
+  }
+
+  int get tabLength => obj.callMethod("getTabLength");
+  set tabLength(int value) => obj.callMethod("setTabLength", [value]);
+
+  bool get usesSoftTabs => obj.callMethod("usesSoftTabs");
+  String get tabText => obj.callMethod("getTabText");
+
+  Grammar get grammar => new Grammar(obj.callMethod("getGrammar"));
+  set grammar(Grammar g) => obj.callMethod("setGrammar", [g.obj]);
+
+  void copySelectedText() {
+    obj.callMethod("copySelectedText");
+  }
+
+  void cutSelectedText() {
+    obj.callMethod("cutSelectedText");
+  }
+
+  void cutToEndOfLine() {
+    obj.callMethod("cutSelectedText");
+  }
+
+  void foldCurrentRow() {
+    obj.callMethod("foldCurrentRow");
+  }
+
+  void unfoldCurrentRow() {
+    obj.callMethod("unfoldCurrentRow");
+  }
+
+  void foldBufferRow(int row) {
+    obj.callMethod("foldBufferRow", [row]);
+  }
+
+  void unfoldBufferRow(int row) {
+    obj.callMethod("unfoldBufferRow", [row]);
+  }
+
+  void foldSelectedLines() {
+    obj.callMethod("foldSelectedLines");
+  }
+
+  void foldAll() => obj.callMethod("foldAll");
+  void unfoldAll() => obj.callMethod("unfoldAll");
+
+  String get placeholderText => obj.callMethod("getPlaceholderText");
+  set placeholderText(String text) => obj.callMethod("setPlaceholderText", [text]);
+
+  void scrollToTop() {
+    obj.callMethod("scrollToTop");
+  }
+
+  void scrollToBottom() {
+    obj.callMethod("scrollToBottom");
+  }
+
+  bool get hasMultipleCursors => obj.callMethod("hasMultipleCursors");
+
+  Point get cursorBufferPosition => new Point.fromJS(obj.callMethod("getCursorBufferPosition"));
+  List<Point> get cursorBufferPositions =>
+    obj.callMethod("getCursorBufferPositions").map((it) => new Position.fromJS(it)).toList();
+
+  List<Cursor> get cursors => obj.callMethod("getCursors").map((it) => new Cursor(it)).toList();
+  Cursor get lastCursor => new Cursor(obj.callMethod("getLastCursor"));
+
+  void moveUp([int lineCount]) {
+    obj.callMethod("moveUp", [lineCount]);
+  }
+
+  void moveDown([int lineCount]) {
+    obj.callMethod("moveDown", [lineCount]);
+  }
+
+  void moveLeft([int columnCount]) {
+    obj.callMethod("moveLeft", [columnCount]);
+  }
+
+  void moveRight([int columnCount]) {
+    obj.callMethod("moveRight", [columnCount]);
+  }
+
+  void moveToBeginningOfLine() {
+    obj.callMethod("moveToBeginningOfLine");
+  }
+
+  void moveToEndOfLine() {
+    obj.callMethod("moveToEndOfLine");
+  }
+
+  void moveToTop() {
+    obj.callMethod("moveToTop");
+  }
+
+  void moveToBottom() {
+    obj.callMethod("moveToBottom");
+  }
+}
+
+class Grammar {
+  final js.JsObject obj;
+
+  Grammar(this.obj);
+
+  Disposable onDidUpdate(Action callback) {
+    return new Disposable(obj.callMethod("onDidUpdate", [callback]));
+  }
+
+  List<List<String>> tokenizeLines(String text) {
+    return obj.callMethod("tokenizeLines", [text]);
+  }
 }
 
 class Range {
@@ -58,4 +268,150 @@ class Range {
   Range(this.ax, this.ay, this.bx, this.by);
 
   js.JsObject toJS() => global.callMethod("Range", [[ax, ay], [bx, by]]);
+}
+
+class Cursor {
+  final js.JsObject obj;
+
+  Cursor(this.obj);
+
+  void destroy() {
+    obj.callMethod("destroy");
+  }
+
+  Disposable onDidDestroy(Action callback) {
+    return new Disposable(obj.callMethod("onDidDestroy", [callback]));
+  }
+
+  Disposable onDidChangePosition(Consumer<CursorPositionChangedEvent> callback) {
+    return new Disposable(obj.callMethod("onDidChangePosition", [
+      (e) => callback(new CursorPositionChangedEvent(e))
+    ]));
+  }
+
+  Disposable onDidChangeVisibility(Consumer<bool> callback) {
+    return new Disposable(obj.callMethod("onDidChangeVisibility", [
+      (e) => callback(e["visibility"])
+    ]));
+  }
+
+  bool get isLastCursor => obj.callMethod("isLastCursor");
+  int get indentLevel => obj.callMethod("getIndentLevel");
+  bool get isSurroundedByWhitespace => obj.callMethod("isSurroundedByWhitespace");
+  bool get isBetweenWordAndNonWord => obj.callMethod("isBetweenWordAndNonWord");
+  bool get isVisible => obj.callMethod("isVisible");
+  bool get hasPrecedingCharactersOnLine => obj.callMethod("hasPrecedingCharactersOnLine");
+
+  bool get isAtBeginningOfLine => obj.callMethod("isAtBeginningOfLine");
+  bool get isAtEndOfLine => obj.callMethod("isAtEndOfLine");
+
+  set isVisible(bool visible) => obj.callMethod("setVisible", [visible]);
+
+  void moveToTop() => obj.callMethod("moveToTop");
+  void moveToBottom() => obj.callMethod("moveToBottom");
+  void skipLeadingWhitespace() => obj.callMethod("skipLeadingWhitespace");
+
+  int get bufferRow => obj.callMethod("getBufferRow");
+  int get bufferColumn => obj.callMethod("getBufferColumn");
+  int get screenRow => obj.callMethod("getScreenRow");
+  int get screenColumn => obj.callMethod("getScreenColumn");
+
+  void setScreenPosition(int row, int column, {bool autoscroll}) {
+    obj.callMethod("setScreenPosition", [[row, column], omap({
+      "autoscroll": autoscroll
+    })]);
+  }
+
+  void setBufferPosition(int row, int column, {bool autoscroll}) {
+    obj.callMethod("setBufferPosition", [[row, column], omap({
+      "autoscroll": autoscroll
+    })]);
+  }
+
+  String get currentWordPrefix => obj.callMethod("getCurrentWordPrefix");
+
+  void clearAutoscroll() => obj.callMethod("clearAutoscroll");
+  void clearSelection() => obj.callMethod("clearSelection");
+}
+
+class CursorPositionChangedEvent {
+  final js.JsObject obj;
+
+  CursorPositionChangedEvent(this.obj);
+
+  Point get oldBufferPosition => new Point.fromJS(obj["oldBufferPosition"]);
+  Point get newBufferPosition => new Point.fromJS(obj["newBufferPosition"]);
+
+  Point get oldScreenPosition => new Point.fromJS(obj["oldScreenPosition"]);
+  Point get newScreenPosition => new Point.fromJS(obj["newScreenPosition"]);
+
+  bool get textChanged => obj["textChanged"];
+  Cursor get cursor => new Cursor(obj["cursor"]);
+}
+
+class Point {
+  final int x;
+  final int y;
+
+  Point(this.x, this.y);
+  Point.fromJS(js.JsObject obj) : this(obj["x"], obj["y"]);
+
+  js.JsObject toJS() {
+    return new js.JsObject.jsify({
+      "x": x,
+      "y": y
+    });
+  }
+}
+
+class WillInsertTextEvent {
+  final js.JsObject obj;
+
+  WillInsertTextEvent(this.obj);
+
+  String get text => obj["text"];
+
+  void cancel() {
+    obj.callMethod("cancel");
+  }
+}
+
+class DidInsertTextEvent {
+  final js.JsObject obj;
+
+  DidInsertTextEvent(this.obj);
+
+  String get text => obj["text"];
+}
+
+class Decoration {
+  final js.JsObject obj;
+
+  Decoration(this.obj);
+
+  void destroy() {
+    obj.callMethod("destroy");
+  }
+
+  Disposable onDidDestroy(Action callback) {
+    return new Disposable(obj.callMethod("onDidDestroy", [callback]));
+  }
+
+  Disposable onDidChangeProperties(Consumer<DecorationPropertiesChangeEvent> callback) {
+    return new Disposable(obj.callMethod("onDidChangeProperties", [(o) {
+      return callback(new DecorationPropertiesChangeEvent(o["oldProperties"], o["newProperties"]));
+    }]));
+  }
+
+  get id => obj.callMethod("getId");
+
+  js.JsObject get properties => obj.callMethod("getProperties");
+  set properties(js.JsObject properties) => obj.callMethod("setProperties", [properties]);
+}
+
+class DecorationPropertiesChangeEvent {
+  final js.JsObject oldProperties;
+  final js.JsObject newProperties;
+
+  DecorationPropertiesChangeEvent(this.oldProperties, this.newProperties);
 }

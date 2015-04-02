@@ -46,13 +46,19 @@ class ModuleExports {
 class Atom {
   static final js.JsObject o = js.context["atom"];
 
-  final CommandRegistry commands = new CommandRegistry();
-
   Atom() {
     workspace = new Workspace(o["workspace"]);
+    commands = new CommandRegistry(o["commands"]);
+    packages = new PackageManager(o["packages"]);
+    styles = new StyleManager(o["styles"]);
+    themes = new ThemeManager(o["themes"]);
   }
 
   Workspace workspace;
+  CommandRegistry commands;
+  PackageManager packages;
+  StyleManager styles;
+  ThemeManager themes;
 
   void open(List<String> paths, {bool newWindow, bool devMode, bool safeMode}) {
     var opts = omap({

@@ -11,5 +11,8 @@
   "scripts": {
     "prepublish": "dart build.dart"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "activationCommands": {
+    "atom-workspace": "dart-example:test"
+  }
 }

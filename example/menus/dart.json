@@ -1,0 +1,18 @@
+{
+  "menu": [
+    {
+      "label": "Packages",
+      "submenu": [
+        {
+          "label": "Dart Example Package",
+          "submenu": [
+            {
+              "label": "Test APIs",
+              "command": "dart-example:test"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

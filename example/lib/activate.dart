@@ -1,11 +1,13 @@
 part of atom.example;
 
 void activate() {
-  atom.workspace.observeTextEditors((TextEditor editor) {
-    print("Text Editor for file ${editor.path}");
+  print("Dart Package Activated");
 
-    editor.onDidSave(() {
-      print("${editor.path} saved.");
-    });
+  atom.commands.add("atom-workspace", "dart-example:test", (e) {
+    var editor = atom.workspace.activeTextEditor;
+    editor.insertText("Hello World");
+    editor.insertNewLine();
+    editor.insertText("Goodbye World");
+    editor.moveToTop();
   });
 }

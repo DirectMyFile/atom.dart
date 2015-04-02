@@ -8,8 +8,6 @@ void main() {
   exports.activate = activate;
 
   exports.deactivate = () {
-    print("Package Deactivated");
+    print("Dart Package Deactivated");
   };
-
-  require("./required").callMethod("hello");
 }
