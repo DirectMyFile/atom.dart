@@ -10,5 +10,5 @@ dartdoc-viewer/
 .pub
 out/
 .c9*
-example/lib/index.js
-example/lib/index.js.map
+example/lib/*.js
+example/lib/*.map

@@ -88,13 +88,9 @@ exec(String command) async {
   var executable = split.first;
   var args = split.skip(1).toList();
   var process = await Process.start(executable, args);
-  var sub = stdin.listen((data) {
-    process.stdin.add(data);
-  });
   stdout.addStream(process.stdout);
   stderr.addStream(process.stderr);
   var code = await process.exitCode;
-  await sub.cancel();
   if (code != 0) {
     print("Process exited with code: ${code}");
     exit(code);

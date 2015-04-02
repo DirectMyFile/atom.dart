@@ -30,8 +30,17 @@ class ModuleExports {
     obj["deactivate"] = function;
   }
 
+  dynamic add(name, value) => obj[name.toString()] = value;
+  dynamic get(name) => obj[name.toString()];
+
   js.JsObject get config => obj["config"];
   set config(input) => obj["config"] = toJsObject(input);
+
+  operator [](name) {
+    return get(name);
+  }
+
+  operator []=(name, value) => add(name, value);
 }
 
 class Atom {

@@ -8,7 +8,7 @@ class CommandRegistry {
       o.callMethod("add", [
         target,
         command,
-        new js.JsFunction.withThis(callback)
+        callback
       ])
     );
   }

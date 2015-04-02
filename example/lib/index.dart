@@ -10,4 +10,6 @@ void main() {
   exports.deactivate = () {
     print("Package Deactivated");
   };
+
+  require("./required").callMethod("hello");
 }
