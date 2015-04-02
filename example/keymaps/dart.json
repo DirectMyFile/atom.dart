@@ -1,0 +1,5 @@
+{
+  "atom-text-editor": {
+    "cmd-alt-m": "dart-example:test"
+  }
+}

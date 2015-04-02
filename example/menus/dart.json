@@ -7,7 +7,7 @@
           "label": "Dart Example Package",
           "submenu": [
             {
-              "label": "Test APIs",
+              "label": "Test",
               "command": "dart-example:test"
             }
           ]

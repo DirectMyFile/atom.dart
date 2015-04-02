@@ -12,6 +12,7 @@ main(List<String> args) async {
   await compile();
   await cleanup();
   await checkPackageJson();
+  await runPackageScript();
 }
 
 findScripts() async {
@@ -112,6 +113,15 @@ cleanup({bool includeScripts: false}) async {
     if (await file.exists()) {
       await file.delete();
     }
+  }
+}
+
+runPackageScript() async {
+  var f = new File("package.dart");
+
+  if (await f.exists()) {
+    print("[Package Script] Running Script");
+    await exec("dart package.dart");
   }
 }
 
