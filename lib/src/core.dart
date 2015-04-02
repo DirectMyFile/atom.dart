@@ -151,6 +151,27 @@ class Atom {
   void openDevTools() => o.callMethod("openDevTools");
   void toggleDevTools() => o.callMethod("toggleDevTools");
   void executeJavaScriptInDevTools(String code) => o.callMethod("executeJavaScriptInDevTools", [code]);
+
+  void show() => o.callMethod("show");
+  void hide() => o.callMethod("hide");
+  void center() => o.callMethod("center");
+  void reload() => o.callMethod("reload");
+  bool get isMaximized => o.callMethod("isMaximized");
+  bool get isFullscreen => o.callMethod("isFullscreen");
+  set isFullscreen(bool value) => o.callMethod("setFullscreen", [value]);
+  bool toggleFullscreen() => o.callMethod("toggleFullscreen");
+}
+
+final Console console = new Console();
+
+class Console {
+  void log(String text) {
+    js.context["console"].callMethod("log", [text]);
+  }
+
+  void error(String text) {
+    js.context["console"].callMethod("error", [text]);
+  }
 }
 
 class WindowSize {
