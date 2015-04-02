@@ -102,7 +102,7 @@ class Stylesheet {
       buff.writeln("${block.selector} {");
       var str = block.build();
 
-      buff.writeln(str.split("\n").map((it) => "  ${it}").join("\n").trim());
+      buff.writeln((str.isNotEmpty ? "  " : "") + str.split("\n").map((it) => "  ${it}").join("\n").trim());
       buff.writeln("}");
     }
     return buff.toString();
@@ -133,7 +133,7 @@ class StyleBlock {
       buff.writeln("${block.selector} {");
       var str = block.build();
 
-      buff.writeln(str.split("\n").map((it) => "  ${it}").join("\n"));
+      buff.writeln((str.isNotEmpty ? "  " : "") + str.split("\n").map((it) => "  ${it}").join("\n"));
       buff.writeln("}");
     }
 

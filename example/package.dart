@@ -4,10 +4,10 @@ void main() {
   menu("dart")
     .createMenu("Packages")
       .createSubMenu("Dart Example Package")
-        .createCommand("Test", "dart-example:test");
+        .createCommand("Reverse Text", "dart-example:reverse");
 
   keymap("dart")
-    .map("atom-text-editor", "cmd-alt-m", "dart-example:test");
+    .map("atom-text-editor", "cmd-alt-r", "dart-example:reverse");
 
   stylesheet("dart")
     .block(".test")

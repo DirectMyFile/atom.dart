@@ -12,6 +12,8 @@ part "src/workspace.dart";
 part "src/packages.dart";
 part "src/themes.dart";
 part "src/styles.dart";
+part "src/menu.dart";
+part "src/grammars.dart";
 
 js.JsObject require(String input) => js.context.callMethod("require", [input]);
 js.JsObject get global => js.context;

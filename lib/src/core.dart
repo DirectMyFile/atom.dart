@@ -43,6 +43,28 @@ class ModuleExports {
   operator []=(name, value) => add(name, value);
 }
 
+class ClipboardContent {
+  final String text;
+  final Map metadata;
+
+  ClipboardContent(this.text, this.metadata);
+}
+
+class Clipboard {
+  final js.JsObject obj;
+
+  Clipboard(this.obj);
+
+  String read() => obj.callMethod("read");
+  ClipboardContent readWithMetadata() => new ClipboardContent(obj["text"], obj["metadata"]);
+
+  void write(String text, [Map metadata = const {}]) {
+    var j = toJsObject(metadata);
+
+    obj.callMethod("write", [text, metadata]);
+  }
+}
+
 class Atom {
   static final js.JsObject o = js.context["atom"];
 
@@ -52,6 +74,9 @@ class Atom {
     packages = new PackageManager(o["packages"]);
     styles = new StyleManager(o["styles"]);
     themes = new ThemeManager(o["themes"]);
+    menu = new MenuManager(o["menu"]);
+    clipboard = new Clipboard(o["clipboard"]);
+    contextMenu = new ContextMenuManager(o["contextMenu"]);
   }
 
   Workspace workspace;
@@ -59,6 +84,9 @@ class Atom {
   PackageManager packages;
   StyleManager styles;
   ThemeManager themes;
+  MenuManager menu;
+  Clipboard clipboard;
+  ContextMenuManager contextMenu;
 
   void open(List<String> paths, {bool newWindow, bool devMode, bool safeMode}) {
     var opts = omap({

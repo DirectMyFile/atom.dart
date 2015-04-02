@@ -7,8 +7,8 @@
           "label": "Dart Example Package",
           "submenu": [
             {
-              "label": "Test",
-              "command": "dart-example:test"
+              "label": "Reverse Text",
+              "command": "dart-example:reverse"
             }
           ]
         }

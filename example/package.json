@@ -13,6 +13,6 @@
   },
   "dependencies": {},
   "activationCommands": {
-    "atom-workspace": "dart-example:test"
+    "atom-workspace": "dart-example:reverse"
   }
 }

@@ -1,5 +1,5 @@
 {
   "atom-text-editor": {
-    "cmd-alt-m": "dart-example:test"
+    "cmd-alt-r": "dart-example:reverse"
   }
 }

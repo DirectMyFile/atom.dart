@@ -25,8 +25,8 @@ class TextEditor {
 
   set text(value) => obj.callMethod("setText", [value.toString()]);
   void setTextInBufferRange(Range range, String text) => obj.callMethod("setTextInBufferRange", [
-    [range.ax, range.ay],
-    [range.bx, range.by]
+    [range.start.row, range.start.column],
+    [range.end.row, range.end.column]
   ]);
 
   void insertText(value) {
@@ -243,6 +243,128 @@ class TextEditor {
   void moveToBottom() {
     obj.callMethod("moveToBottom");
   }
+
+  Selection get lastSelection => new Selection(obj.callMethod("getLastSelection"));
+  List<Selection> get selections => obj.callMethod("getSelections").map((it) =>
+    new Selection(it)
+  ).toList();
+}
+
+class Selection {
+  final js.JsObject obj;
+
+  Selection(this.obj);
+
+  Disposable onDidDestroy(Action callback) {
+    return new Disposable(obj.callMethod("onDidDestroy", [callback]));
+  }
+
+  Range get screenRange => new RangeProxy(obj.callMethod("getScreenRange"));
+  Range get bufferRange => new RangeProxy(obj.callMethod("getBufferRange"));
+  void setScreenRange(Range range, {bool preserveFolds, bool autoScroll}) => obj.callMethod("setScreenRange", [
+    [
+      [range.start.row, range.start.column],
+      [range.end.row, range.end.column]
+    ],
+    omap({
+      "preserveFolds": preserveFolds,
+      "autoScroll": autoScroll
+    })
+  ]);
+
+  void setBufferRange(Range range, {bool preserveFolds, bool autoScroll}) => obj.callMethod("setScreenRange", [
+    [
+      [range.start.row, range.start.column],
+      [range.end.row, range.end.column]
+    ],
+    omap({
+      "preserveFolds": preserveFolds,
+      "autoScroll": autoScroll
+    })
+  ]);
+
+  bool get isEmpty => obj.callMethod("isEmpty");
+  bool get isReversed => obj.callMethod("isReversed");
+  String get text => obj.callMethod("getText");
+  bool get isSingleScreenLine => obj.callMethod("isSingleScreenLine");
+  bool intersectsBufferRange(Range range) => obj.callMethod("intersectsBufferRange", [
+    [range.start.row, range.start.column],
+    [range.end.row, range.end.column]
+  ]);
+  bool intersectsWith(Selection selection) => intersectsBufferRange(selection.bufferRange);
+
+  void insertText(String text) {
+    obj.callMethod("insertText", [text]);
+  }
+
+  void addSelectionBelow() {
+    obj.callMethod("addSelectionBelow");
+  }
+
+  void addSelectionAbove() {
+    obj.callMethod("addSelectionAbove");
+  }
+
+  void fold() {
+    obj.callMethod("fold");
+  }
+
+  void joinLines() {
+    obj.callMethod("joinLines");
+  }
+
+  void deleteLine() {
+    obj.callMethod("deleteLine");
+  }
+
+  void delete() {
+    obj.callMethod("delete");
+  }
+
+  void backspace() {
+    obj.callMethod("backspace");
+  }
+
+  void clear() {
+    obj.callMethod("clear");
+  }
+
+  void selectAll() {
+    obj.callMethod("selectAll");
+  }
+}
+
+class Range {
+  final Point start;
+  final Point end;
+
+  Range(this.start, this.end);
+
+  bool get isEmpty => start == end;
+  int get rowCount => end.row - start.row + 1;
+  bool get isSingleLine => start.row == end.row;
+}
+
+class RangeProxy implements Range {
+  final js.JsObject obj;
+
+  RangeProxy(this.obj);
+
+  @override
+  Point get end => new Point.fromJS(obj["end"]);
+
+  @override
+  bool get isEmpty => obj.callMethod("isEmpty");
+
+  @override
+  bool get isSingleLine => obj.callMethod("isSingleLine");
+
+
+  @override
+  int get rowCount => obj.callMethod("getRowCount");
+
+  @override
+  Point get start => new Point.fromJS(obj["start"]);
 }
 
 class Grammar {
@@ -257,17 +379,6 @@ class Grammar {
   List<List<String>> tokenizeLines(String text) {
     return obj.callMethod("tokenizeLines", [text]);
   }
-}
-
-class Range {
-  final int ax;
-  final int ay;
-  final int bx;
-  final int by;
-
-  Range(this.ax, this.ay, this.bx, this.by);
-
-  js.JsObject toJS() => global.callMethod("Range", [[ax, ay], [bx, by]]);
 }
 
 class Cursor {
@@ -350,16 +461,16 @@ class CursorPositionChangedEvent {
 }
 
 class Point {
-  final int x;
-  final int y;
+  final int row;
+  final int column;
 
-  Point(this.x, this.y);
-  Point.fromJS(js.JsObject obj) : this(obj["x"], obj["y"]);
+  Point(this.row, this.column);
+  Point.fromJS(js.JsObject obj) : this(obj["row"], obj["column"]);
 
   js.JsObject toJS() {
     return new js.JsObject.jsify({
-      "x": x,
-      "y": y
+      "row": row,
+      "column": column
     });
   }
 }
