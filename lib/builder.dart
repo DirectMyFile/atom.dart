@@ -167,6 +167,84 @@ Stylesheet stylesheet(String name) {
   return m;
 }
 
+class Package {
+  final Map<String, dynamic> json;
+
+  Package(String name, String version) : json = {} {
+    json["name"] = name;
+    json["version"] = version;
+    json["dependencies"] = {};
+    json["engines"] = {};
+    json["scripts"] = {};
+  }
+
+  String get name => json["name"];
+  set name(String value) => json["name"] = value;
+
+  Map<String, String> get dependencies => json["dependencies"];
+  Map<String, String> get engines => json["engines"];
+  Map<String, String> get scripts => json["scripts"];
+
+  String encodeJSON() => new JsonEncoder.withIndent("  ").convert(json);
+
+  String get main => json["main"];
+  set main(String value) => json["main"] = value;
+
+  String get license => json["license"];
+  set license(String value) => json["license"] = value;
+
+  String get repository => json["repository"];
+  set repository(String value) => json["repository"] = value;
+
+  String get description => json["description"];
+  set description(String value) => json["description"] = value;
+
+  Package dependency(String name, String version) {
+    dependencies[name] = version;
+    return this;
+  }
+
+  Package engine(String name, String version) {
+    engines[name] = version;
+    return this;
+  }
+
+  Package script(String hook, String command) {
+    scripts[hook] = command;
+    return this;
+  }
+
+  Package atom(String version) {
+    engine("atom", version);
+    return this;
+  }
+}
+
+Package _package;
+
+Package package(String name, String version, {String main, String license, String repository, String description}) {
+  var m = new Package(name, version);
+
+  if (main != null) {
+    m.main = main;
+  }
+
+  if (license != null) {
+    m.license = license;
+  }
+
+  if (repository != null) {
+    m.repository = repository;
+  }
+
+  if (m.description != null) {
+    m.description = description;
+  }
+
+  _package = m;
+  return m;
+}
+
 void build() {
   for (var m in _menuFiles) {
     var file = new File("menus/${m.label}.json");
@@ -184,5 +262,11 @@ void build() {
     var file = new File("styles/${m.name}.less");
     file.createSync(recursive: true);
     file.writeAsStringSync(m.build());
+  }
+
+  if (_package != null) {
+    var file = new File("package.json");
+
+    file.writeAsStringSync(_package.encodeJSON());
   }
 }

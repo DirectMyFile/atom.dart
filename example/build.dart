@@ -8,11 +8,11 @@ bool isDevEnabled = false;
 main(List<String> args) async {
   isDevEnabled = args.contains("--dev") || args.contains("-d");
 
+  await runPackageScript();
   await findScripts();
   await compile();
   await cleanup();
   await checkPackageJson();
-  await runPackageScript();
 }
 
 findScripts() async {

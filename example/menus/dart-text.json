@@ -29,10 +29,6 @@
             {
               "label": "Switchcase",
               "command": "dart-text:switchcase"
-            },
-            {
-              "label": "Word per Line",
-              "command": "dart-text:word_per_line"
             }
           ]
         }

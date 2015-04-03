@@ -5,16 +5,25 @@ Menu textMenu = menu("dart-text")
   .createSubMenu("Dart Text Utilities");
 
 void main() {
-  add("Reverse", "reverse");
-  add("Base64 Encode", "encode_base64");
-  add("Base64 Decode", "decode_base64");
-  add("Uppercase", "uppercase");
-  add("Lowercase", "lowercase");
-  add("Switchcase", "switchcase");
+  package(
+    "dart-text",
+    "0.1.0",
+    license: "MIT",
+    repository: "https://github.com/DirectMyFile/atom.dart",
+    description: "Text Utilities in Dart",
+    main: "lib/index.js"
+  ).atom(">0.180.0");
+
+  addTextModifier("Reverse", "reverse");
+  addTextModifier("Base64 Encode", "encode_base64");
+  addTextModifier("Base64 Decode", "decode_base64");
+  addTextModifier("Uppercase", "uppercase");
+  addTextModifier("Lowercase", "lowercase");
+  addTextModifier("Switchcase", "switchcase");
 
   build();
 }
 
-void add(String name, String cmd) {
+void addTextModifier(String name, String cmd) {
   textMenu.createCommand(name, "dart-text:${cmd}");
 }

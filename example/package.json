@@ -1,18 +1,12 @@
 {
   "name": "dart-text",
   "version": "0.1.0",
-  "description": "Text Utilities in Dart",
-  "repository": "https://github.com/DirectMyFile/atom.dart",
+  "dependencies": {},
+  "engines": {
+    "atom": ">0.180.0"
+  },
+  "scripts": {},
   "main": "lib/index.js",
   "license": "MIT",
-  "engines": {
-    "atom": ">0.50.0"
-  },
-  "scripts": {
-    "prepublish": "dart build.dart"
-  },
-  "dependencies": {},
-  "activationCommands": {
-    "atom-workspace": "dart-text:reverse"
-  }
+  "repository": "https://github.com/DirectMyFile/atom.dart"
 }
