@@ -1,3 +1,6 @@
+/**
+ * Generate Atom Packages using Dart
+ */
 library atom.builder;
 
 import "dart:io";
