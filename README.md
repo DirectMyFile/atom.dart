@@ -7,11 +7,7 @@ Make Atom Packages in Dart
 - Atom API Bindings
 - Super Awesome Package Builder
 
-## Example Package
-
-See the [example package](https://github.com/DirectMyFile/atom.dart/tree/master/example) for more information.
-
-## Example API
+## Example Code
 
 ```dart
 import "package:atom/atom.dart";
@@ -29,6 +25,10 @@ void activate() {
   });
 }
 ```
+
+## Example Package
+
+See the [example package](https://github.com/DirectMyFile/atom.dart/tree/master/example) for more information.
 
 ## Package Builder
 
