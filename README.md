@@ -17,6 +17,7 @@ It generates the following:
 - KeyMaps
 - Menus
 - Context Menus
+- Grammars
 - package.json
 
 And it also compiles your code to JavaScript and lints your package.json!
