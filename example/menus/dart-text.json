@@ -1,38 +1,35 @@
 {
-  "menu": [
-    {
-      "label": "Packages",
-      "submenu": [
-        {
-          "label": "Dart Text Utilities",
-          "submenu": [
-            {
-              "label": "Reverse",
-              "command": "dart-text:reverse"
-            },
-            {
-              "label": "Base64 Encode",
-              "command": "dart-text:encode_base64"
-            },
-            {
-              "label": "Base64 Decode",
-              "command": "dart-text:decode_base64"
-            },
-            {
-              "label": "Uppercase",
-              "command": "dart-text:uppercase"
-            },
-            {
-              "label": "Lowercase",
-              "command": "dart-text:lowercase"
-            },
-            {
-              "label": "Switchcase",
-              "command": "dart-text:switchcase"
-            }
-          ]
-        }
-      ]
-    }
-  ]
+  "context-menu": {
+    "atom-workspace": [
+      {
+        "label": "Text Utilities",
+        "submenu": [
+          {
+            "label": "Reverse",
+            "command": "dart-text:reverse"
+          },
+          {
+            "label": "Base64 Encode",
+            "command": "dart-text:encode_base64"
+          },
+          {
+            "label": "Base64 Decode",
+            "command": "dart-text:decode_base64"
+          },
+          {
+            "label": "Uppercase",
+            "command": "dart-text:uppercase"
+          },
+          {
+            "label": "Lowercase",
+            "command": "dart-text:lowercase"
+          },
+          {
+            "label": "Switchcase",
+            "command": "dart-text:switchcase"
+          }
+        ]
+      }
+    ]
+  }
 }

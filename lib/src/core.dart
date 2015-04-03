@@ -61,7 +61,7 @@ class Clipboard {
   void write(String text, [Map metadata = const {}]) {
     var j = toJsObject(metadata);
 
-    obj.callMethod("write", [text, metadata]);
+    obj.callMethod("write", [text, j]);
   }
 }
 

@@ -4,16 +4,18 @@ import "dart:io";
 import "dart:convert";
 
 class Menu {
+  final String selector;
   final String label;
   final List<Menu> submenus;
+  final bool contextMenu;
 
   bool _root = false;
   bool get isRoot => _root;
 
   String command;
 
-  Menu(this.label) : submenus = [];
-  Menu.root(this.label) : _root = true, submenus = [];
+  Menu(this.label) : submenus = [], contextMenu = false, selector = null;
+  Menu.root(this.label, {this.contextMenu: false, this.selector}) : _root = true, submenus = [];
 
   void addSubMenu(Menu menu) {
     submenus.add(menu);
@@ -43,9 +45,17 @@ class Menu {
 
   Map toJSON() {
     if (isRoot) {
-      return {
-        "menu": submenus.map((it) => it.toJSON()).toList()
-      };
+      if (contextMenu) {
+        return {
+          "context-menu": {
+            selector: submenus.map((it) => it.toJSON()).toList()
+          }
+        };
+      } else {
+        return {
+          "menu": submenus.map((it) => it.toJSON()).toList()
+        };
+      }
     }
 
     var map = {
@@ -149,8 +159,8 @@ List<Menu> _menuFiles = [];
 List<KeyMap> _keymaps = [];
 List<Stylesheet> _stylesheets = [];
 
-Menu menu(String name) {
-  var m = new Menu.root(name);
+Menu menu(String name, {bool contextMenu: false, String selector}) {
+  var m = new Menu.root(name, contextMenu: contextMenu, selector: selector);
   _menuFiles.add(m);
   return m;
 }

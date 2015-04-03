@@ -1,8 +1,7 @@
 import "package:atom/builder.dart";
 
-Menu textMenu = menu("dart-text")
-  .createMenu("Packages")
-  .createSubMenu("Dart Text Utilities");
+Menu textMenu = menu("dart-text", contextMenu: true, selector: "atom-workspace")
+  .createMenu("Text Utilities");
 
 void main() {
   package(
