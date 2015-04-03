@@ -278,7 +278,7 @@ void build() {
   for (var m in _grammars) {
     var file = new File("grammars/${m.name}.json");
     file.createSync(recursive: true);
-    file.writeAsStringSync(JSON.encode(m.toJSON()));
+    file.writeAsStringSync(new JsonEncoder.withIndent("  ").convert(m.toJSON()));
   }
 
   if (_package != null) {
@@ -301,11 +301,17 @@ class Grammar {
     return this;
   }
 
+  void load(void handler(void match(String name, String pattern), void beginEnd(name, String begin, String end, [patterns]))) {
+    handler((name, p) => pattern(new MatchGrammarPattern(name, p)), (name, begin, end, [patterns]) {
+      pattern(new BeginEndGrammarPattern(name, begin, end, patterns));
+    });
+  }
+
   Map toJSON() => {
     "name": name,
     "scope": scope,
     "fileTypes": fileTypes,
-    "patterns": patterns
+    "patterns": patterns.map((it) => it.toJSON()).toList()
   };
 }
 
