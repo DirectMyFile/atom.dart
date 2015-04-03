@@ -17,7 +17,7 @@ See the [example package](https://github.com/DirectMyFile/atom.dart/tree/master/
 import "package:atom/atom.dart";
 
 void main() {
-  exports.activate = activate;
+  onPackageActivated(activate);
 }
 
 void activate() {

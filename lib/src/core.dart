@@ -7,6 +7,40 @@ typedef void Action();
 
 final ModuleExports exports = new ModuleExports();
 
+List<Function> _onActivate = [];
+List<Action> _onDeactivate = [];
+bool _activateHooked = false;
+bool _deactivateHooked = false;
+
+void onPackageActivated(Function function) {
+  if (!_activateHooked) {
+    exports.activate = ([state]) {
+      for (var c in _onActivate) {
+        if (c is Action) {
+          c();
+        } else {
+          c(state);
+        }
+      }
+    };
+    _activateHooked = true;
+  }
+
+  _onActivate.add(function);
+}
+
+void onPackageDeactivated(Action action) {
+  if (!_deactivateHooked) {
+    exports.deactivate = () {
+      for (var f in _onDeactivate) {
+        f();
+      }
+    };
+    _deactivateHooked = true;
+  }
+  _onDeactivate.add(action);
+}
+
 class ModuleExports {
   js.JsObject obj;
 
