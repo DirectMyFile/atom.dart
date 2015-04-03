@@ -77,6 +77,7 @@ class Atom {
     menu = new MenuManager(o["menu"]);
     clipboard = new Clipboard(o["clipboard"]);
     contextMenu = new ContextMenuManager(o["contextMenu"]);
+    tooltips = new TooltipManager(o["tooltips"]);
   }
 
   Workspace workspace;
@@ -87,6 +88,8 @@ class Atom {
   MenuManager menu;
   Clipboard clipboard;
   ContextMenuManager contextMenu;
+  TooltipManager tooltips;
+  Project get project => new Project(o["project"]);
 
   void open(List<String> paths, {bool newWindow, bool devMode, bool safeMode}) {
     var opts = omap({
