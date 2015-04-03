@@ -231,6 +231,7 @@ class Package {
 }
 
 Package _package;
+List<Grammar> _grammars = [];
 
 Package package(String name, String version, {String main, String license, String repository, String description}) {
   var m = new Package(name, version);
@@ -274,9 +275,83 @@ void build() {
     file.writeAsStringSync(m.build());
   }
 
+  for (var m in _grammars) {
+    var file = new File("grammars/${m.name}.json");
+    file.createSync(recursive: true);
+    file.writeAsStringSync(JSON.encode(m.toJSON()));
+  }
+
   if (_package != null) {
     var file = new File("package.json");
 
     file.writeAsStringSync(_package.encodeJSON());
+  }
+}
+
+class Grammar {
+  final String name;
+  final String scope;
+  final List<String> fileTypes;
+  final List<GrammarPattern> patterns = [];
+
+  Grammar(this.name, this.scope, this.fileTypes);
+
+  Grammar pattern(GrammarPattern pattern) {
+    patterns.add(pattern);
+    return this;
+  }
+
+  Map toJSON() => {
+    "name": name,
+    "scope": scope,
+    "fileTypes": fileTypes,
+    "patterns": patterns
+  };
+}
+
+Grammar grammar(String name, String scope, {List<String> fileTypes: const []}) {
+  var m = new Grammar(name, scope, fileTypes);
+  _grammars.add(m);
+  return m;
+}
+
+abstract class GrammarPattern {
+  Map toJSON();
+}
+
+class MatchGrammarPattern extends GrammarPattern {
+  final String name;
+  final String match;
+
+  MatchGrammarPattern(this.name, this.match);
+
+  @override
+  Map toJSON() => {
+    "name": name,
+    "match": match
+  };
+}
+
+class BeginEndGrammarPattern extends GrammarPattern {
+  final String name;
+  final String begin;
+  final String end;
+  final List<GrammarPattern> patterns;
+
+  BeginEndGrammarPattern(this.name, this.begin, this.end, [this.patterns]);
+
+  @override
+  Map toJSON() {
+    var map = {
+      "name": name,
+      "begin": begin,
+      "end": end
+    };
+
+    if (patterns != null) {
+      map["patterns"] = patterns.map((it) => it.toJSON()).toList();
+    }
+
+    return map;
   }
 }
