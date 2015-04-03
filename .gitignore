@@ -12,3 +12,5 @@ out/
 .c9*
 example/lib/*.js
 example/lib/*.map
+test/grammars
+test/package.json
