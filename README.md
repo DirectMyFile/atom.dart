@@ -14,8 +14,6 @@ See the [example package](https://github.com/DirectMyFile/atom.dart/tree/master/
 ## Example API
 
 ```dart
-library atom.example.text;
-
 import "package:atom/atom.dart";
 
 void main() {
