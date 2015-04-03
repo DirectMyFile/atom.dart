@@ -415,20 +415,6 @@ class RangeProxy implements Range {
   Point get start => new Point.fromJS(obj["start"]);
 }
 
-class Grammar {
-  final js.JsObject obj;
-
-  Grammar(this.obj);
-
-  Disposable onDidUpdate(Action callback) {
-    return new Disposable(obj.callMethod("onDidUpdate", [callback]));
-  }
-
-  List<List<String>> tokenizeLines(String text) {
-    return obj.callMethod("tokenizeLines", [text]);
-  }
-}
-
 class Cursor {
   final js.JsObject obj;
 

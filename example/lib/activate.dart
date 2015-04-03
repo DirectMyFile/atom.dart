@@ -49,4 +49,10 @@ void activate() {
   addSelectionModifier("uppercase", (selection, text, replace) {
     replace(text.toUpperCase());
   });
+
+  addSelectionModifier("tokenize", (Selection selection, text, replace) {
+    var lines = atom.workspace.activeTextEditor.grammar.tokenizeLines(text);
+    var tokens = lines.expand((a) => a.expand((b) => [b.value]));
+    replace(tokens.join("\n"));
+  });
 }

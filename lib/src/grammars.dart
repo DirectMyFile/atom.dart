@@ -1,5 +1,31 @@
 part of atom;
 
+class Grammar {
+  final js.JsObject obj;
+
+  Grammar(this.obj);
+
+  Disposable onDidUpdate(Action callback) {
+    return new Disposable(obj.callMethod("onDidUpdate", [callback]));
+  }
+
+  List<List<Token>> tokenizeLines(String text) {
+    return obj.callMethod("tokenizeLines", [text]).map((it) {
+      return it.map((x) {
+        return new Token(x);
+      }).toList();
+    }).toList();
+  }
+}
+
+class Token {
+  final js.JsObject obj;
+
+  Token(this.obj);
+
+  String get value => obj["value"];
+}
+
 class GrammarRegistry {
   final js.JsObject obj;
 

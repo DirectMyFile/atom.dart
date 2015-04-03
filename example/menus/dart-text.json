@@ -27,6 +27,10 @@
           {
             "label": "Switchcase",
             "command": "dart-text:switchcase"
+          },
+          {
+            "label": "Tokenize",
+            "command": "dart-text:tokenize"
           }
         ]
       }

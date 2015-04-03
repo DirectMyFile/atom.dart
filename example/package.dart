@@ -19,6 +19,7 @@ void main() {
   addTextModifier("Uppercase", "uppercase");
   addTextModifier("Lowercase", "lowercase");
   addTextModifier("Switchcase", "switchcase");
+  addTextModifier("Tokenize Syntax", "tokenize");
 
   build();
 }

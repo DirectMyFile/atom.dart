@@ -136,4 +136,5 @@ self.module = module;
 self.window = window;
 self.atom = atom;
 self.exports = exports;
+self.Object = Object;
 """;
