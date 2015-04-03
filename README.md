@@ -7,6 +7,31 @@ Make Atom Packages in Dart
 - Atom API Bindings
 - Super Awesome Package Builder
 
+## Example Package
+
+See the [example package](https://github.com/DirectMyFile/atom.dart/tree/master/example) for more information.
+
+## Example API
+
+```dart
+library atom.example.text;
+
+import "package:atom/atom.dart";
+
+void main() {
+  exports.activate = activate;
+}
+
+void activate() {
+  atom.workspace.observeTextEditors((TextEditor editor) {
+    print("Text Editor Opened");
+    editor.onWillInsertText((WillInsertTextEvent event) {
+      print("Inserting Text: ${event.text}");
+    });
+  });
+}
+```
+
 ## Package Builder
 
 The package builder is a script that builds your package using the instructions you give it.
@@ -54,7 +79,3 @@ void addTextModifier(String name, String cmd) {
   textMenu.createCommand(name, "dart-text:${cmd}");
 }
 ```
-
-## Example Package
-
-See the [example package](https://github.com/DirectMyFile/atom.dart/tree/master/example) for more information.
