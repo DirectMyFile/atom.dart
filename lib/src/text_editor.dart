@@ -48,6 +48,14 @@ class TextEditor {
   Disposable onDidSave(Action callback) => new Disposable(obj.callMethod("onDidSave", [(e) => callback()]));
   Disposable onDidDestroy(Action callback) => new Disposable(obj.callMethod("onDidDestroy", [callback]));
 
+  void save() {
+    obj.callMethod("save");
+  }
+
+  void saveAs(String path) {
+    obj.callMethod("saveAs", [path]);
+  }
+
   void transpose() {
     obj.callMethod("transpose");
   }
@@ -122,6 +130,18 @@ class TextEditor {
     return new Disposable(obj.callMethod("onDidChangeGrammar", [(e) => callback(new Grammar(e))]));
   }
 
+  Disposable onDidAddSelection(Consumer<Selection> callback) {
+    return new Disposable(obj.callMethod("onDidAddSelection", [(e) => callback(new Selection(e))]));
+  }
+
+  Disposable onDidRemoveSelection(Consumer<Selection> callback) {
+    return new Disposable(obj.callMethod("onDidRemoveSelection", [(e) => callback(new Selection(e))]));
+  }
+
+  ScopeDescriptor get rootScopeDescriptor => new ScopeDescriptor.wrap(obj.callMethod("getRootScopeDescriptor"));
+  ScopeDescriptor scopeDescriptorForBufferPosition(f) =>
+    new ScopeDescriptor.wrap(obj.callMethod("scopeDescriptorForBufferPosition", [f is Point ? f.toJS() : f]));
+
   Disposable observeGrammar(Consumer<Grammar> callback) {
     return new Disposable(obj.callMethod("observeGrammar", [(e) => callback(new Grammar(e))]));
   }
@@ -167,6 +187,10 @@ class TextEditor {
 
   void cutToEndOfLine() {
     obj.callMethod("cutSelectedText");
+  }
+
+  void pasteText() {
+    obj.callMethod("pasteText");
   }
 
   void foldCurrentRow() {
@@ -248,6 +272,30 @@ class TextEditor {
   List<Selection> get selections => obj.callMethod("getSelections").map((it) =>
     new Selection(it)
   ).toList();
+
+  Disposable observeDecorations(Consumer<Decoration> callback) {
+    return new Disposable(obj.callMethod("observeDecorations", [
+      (e) => callback(new Decoration(e))
+    ]));
+  }
+
+  Disposable onDidAddDecoration(Consumer<Decoration> callback) {
+    return new Disposable(obj.callMethod("onDidAddDecoration", [
+      (e) => callback(new Decoration(e))
+    ]));
+  }
+
+  Disposable onDidRemoveDecoration(Consumer<Decoration> callback) {
+    return new Disposable(obj.callMethod("onDidRemoveDecoration", [
+        (e) => callback(new Decoration(e))
+    ]));
+  }
+
+  Disposable onDidChangePlaceholderText(Consumer<String> callback) {
+    return new Disposable(obj.callMethod("onDidChangePlaceholderText", [
+      (e) => callback(e)
+    ]));
+  }
 }
 
 class Selection {
