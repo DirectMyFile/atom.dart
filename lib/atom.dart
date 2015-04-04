@@ -21,6 +21,7 @@ part "src/grammars.dart";
 part "src/tooltips.dart";
 part "src/project.dart";
 part "src/panel.dart";
+part "src/pane.dart";
 
 js.JsObject require(String input) => js.context.callMethod("require", [input]);
 js.JsObject get global => js.context;

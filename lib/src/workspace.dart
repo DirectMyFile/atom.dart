@@ -46,6 +46,35 @@ class Workspace {
   Panel addModalPanel(Element item, {bool visible: true, int priority: 100}) =>
     _addPanel("addModalPanel", item, visible, priority);
 
+  List<Pane> get panes => obj.callMethod("getPanes").map((it) => new Pane(it)).toList();
+  Pane get activePane => new Pane(obj.callMethod("getActivePane"));
+  void activateNextPane() {
+    obj.callMethod("activateNextPane");
+  }
+
+  void activatePreviousPane() {
+    obj.callMethod("activatePreviousPane");
+  }
+
+  Pane paneForUri(String uri) {
+    var e = obj.callMethod("paneForURI", [uri]);
+    if (e == null) {
+      return null;
+    }
+    return new Pane(e);
+  }
+
+  List<dynamic> get paneItems => obj.callMethod("getPaneItems");
+  dynamic get activePaneItem => obj.callMethod("getActivePaneItem");
+
+  Pane paneForItem(item) {
+    var e = obj.callMethod("paneForItem", [item]);
+    if (e == null) {
+      return null;
+    }
+    return new Pane(e);
+  }
+
   List<Panel> get bottomPanels => _panels("getBottomPanels");
   List<Panel> get topPanels => _panels("getTopPanels");
   List<Panel> get leftPanels => _panels("getLeftPanels");
