@@ -29,8 +29,12 @@
             "command": "dart-text:switchcase"
           },
           {
-            "label": "Tokenize",
+            "label": "Tokenize Syntax",
             "command": "dart-text:tokenize"
+          },
+          {
+            "label": "Say Hello",
+            "command": "dart-text:say_hello"
           }
         ]
       }

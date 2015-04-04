@@ -1,6 +1,9 @@
 library atom;
 
 import "dart:async";
+import "dart:html" hide Selection;
+export "dart:html" hide Selection;
+
 import "dart:js" as js;
 
 import "utils.dart";
@@ -17,6 +20,7 @@ part "src/menu.dart";
 part "src/grammars.dart";
 part "src/tooltips.dart";
 part "src/project.dart";
+part "src/panel.dart";
 
 js.JsObject require(String input) => js.context.callMethod("require", [input]);
 js.JsObject get global => js.context;

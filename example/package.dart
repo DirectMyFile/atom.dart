@@ -21,6 +21,8 @@ void main() {
   addTextModifier("Switchcase", "switchcase");
   addTextModifier("Tokenize Syntax", "tokenize");
 
+  textMenu.createCommand("Say Hello", "dart-text:say_hello");
+
   build();
 }
 

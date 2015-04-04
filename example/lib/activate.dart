@@ -55,4 +55,12 @@ void activate() {
     var tokens = lines.expand((a) => a.expand((b) => [b.value]));
     replace(tokens.join("\n"));
   });
+
+  atom.commands.add("atom-workspace", "dart-text:say_hello", (e) {
+    var a = document.createElement("div");
+    var b = document.createElement("h2");
+    b.text = "Hello World";
+    a.append(b);
+    atom.workspace.addModalPanel(a);
+  });
 }
