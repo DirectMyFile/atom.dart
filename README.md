@@ -26,9 +26,9 @@ void activate() {
 }
 ```
 
-## Example Package
+## Packages that use atom.dart
 
-See the [example package](https://github.com/DirectMyFile/atom.dart/tree/master/example) for more information.
+- [Text Utilities](https://github.com/DirectMyFile/atom-text-utils)
 
 ## Package Builder
 
