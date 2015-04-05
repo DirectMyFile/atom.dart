@@ -10,18 +10,27 @@ import "dart:convert";
 final List<String> scripts = [];
 bool isDevEnabled = false;
 
+final Options options = new Options();
+
+class Options {
+  bool scanForScripts = true;
+  String scriptScanDirectory = "lib";
+}
+
 main(List<String> args) async {
   isDevEnabled = args.contains("--dev") || args.contains("-d");
 
   await runPackageScript();
-  await findScripts();
+  if (options.scanForScripts) {
+    await findScripts();
+  }
   await compile();
   await cleanup();
   await checkPackageJson();
 }
 
 findScripts() async {
-  var dir = new Directory("lib");
+  var dir = new Directory(options.scriptScanDirectory);
   scripts.addAll(
     await dir.list(recursive: true)
       .where((it) => it is File && it.path.endsWith(".dart"))
