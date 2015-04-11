@@ -90,7 +90,7 @@ compile() async {
   for (var script in scripts) {
     var js = getJsName(script);
     print("[Compile] ${script}");
-    await exec("dart2js --csp -o ${js} ${script}");
+    await exec("${Platform.isWindows ? 'dart2js.bat' : 'dart2js'} --csp -o ${js} ${script}");
     var file = new File(js);
     var content = await file.readAsString();
     content = fixScript(content);
