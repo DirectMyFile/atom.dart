@@ -14,7 +14,7 @@ void main() {
 
 Map<String, String> loadOurAPI() {
   var result = Process.runSync(
-    "dartdocgen",
+    Platform.isWindows ? "dartdocgen.bat" : "dartdocgen",
     "--no-include-sdk --package-root=packages --indent-json lib/atom.dart".split(" ")
   );
 
