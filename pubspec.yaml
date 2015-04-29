@@ -2,4 +2,5 @@ name: atom
 description: Make Atom Packages in Dart
 version: 1.0.0-v0.190.0
 dependencies:
+  barback: ">=0.15.2+4 <0.16.0"
   crypto: ">=0.9.0 <0.10.0"
