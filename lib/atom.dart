@@ -24,6 +24,7 @@ part "src/panel.dart";
 part "src/pane.dart";
 part "src/color.dart";
 part "src/keymap.dart";
+part "src/process.dart";
 
 js.JsObject require(String input) => js.context.callMethod("require", [input]);
 js.JsObject get global => js.context;
