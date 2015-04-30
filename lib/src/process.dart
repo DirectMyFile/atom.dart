@@ -7,6 +7,7 @@ class BufferedProcess {
   final js.JsObject obj;
 
   factory BufferedProcess(String command, List<String> args, {
+    Map options,
     StdioHandler stdout,
     StdioHandler stderr,
     ExitCodeHandler exit
@@ -28,7 +29,13 @@ class BufferedProcess {
       map["exit"] = exit;
     }
 
-    return new BufferedProcess.wrap(new JsObject(global["BufferedProcess"], [map]));
+    if (options != null) {
+      map["options"] = options;
+    }
+
+    var jsBufferedProcess = require('atom')['BufferedProcess'];
+
+    return new BufferedProcess.wrap(new js.JsObject(jsBufferedProcess, [new js.JsObject.jsify(map)]));
   }
 
   BufferedProcess.wrap(this.obj);
