@@ -28,7 +28,7 @@ class BufferedProcess {
       map["exit"] = exit;
     }
 
-    return new BufferedProcess.wrap(global.callMethod("BufferedProcess", [map]));
+    return new BufferedProcess.wrap(new JsObject(global["BufferedProcess"], [map]));
   }
 
   BufferedProcess.wrap(this.obj);
