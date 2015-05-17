@@ -124,6 +124,7 @@ class Atom {
   ContextMenuManager contextMenu;
   TooltipManager tooltips;
   Project get project => new Project(o["project"]);
+  NotificationManager get notifications => new NotificationManager(o['notifications']);
 
   void open(List<String> paths, {bool newWindow, bool devMode, bool safeMode}) {
     var opts = omap({
@@ -236,4 +237,3 @@ class Disposable {
     obj.callMethod("dispose");
   }
 }
-
