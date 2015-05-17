@@ -17,6 +17,7 @@ part "src/packages.dart";
 part "src/themes.dart";
 part "src/styles.dart";
 part "src/menu.dart";
+part "src/notification_manager.dart";
 part "src/grammars.dart";
 part "src/tooltips.dart";
 part "src/project.dart";
