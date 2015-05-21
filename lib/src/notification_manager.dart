@@ -9,7 +9,8 @@ class NotificationManager {
   // Stream get onDidAddNotification;
 
   // Getting Notifications
-  void get notifications => obj.callMethod('getNotifications', []);
+  // TODO: What should this return?
+  dynamic get notifications => obj.callMethod('getNotifications', []);
 
   // Adding Notifications
   void addSuccess(String message, Map options) {
