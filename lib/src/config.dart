@@ -12,7 +12,7 @@ class Config extends ProxyHolder {
     return invoke("get", key, defaultValue, map.isEmpty ? null : map);
   }
 
-  /// A conveinence method for [get] when it is known to return a String. This
+  /// A convenience method for [get] when it is known to return a String. This
   /// will return `null` if the return type is anything but a [String].
   String getString(String key, {dynamic defaultValue, List<String> sources,
       List<String> excludeSources, ScopeDescriptor scope}) {
@@ -22,10 +22,7 @@ class Config extends ProxyHolder {
         excludeSources: excludeSources,
         scope: scope);
     if (result is String || result == null) return result;
-    if (result is js.JsObject) {
-      window.console.log(result);
-      return result.callMethod('toString');
-    }
+    if (result is js.JsObject) return result.callMethod('toString');
     return '${result}';
   }
 
