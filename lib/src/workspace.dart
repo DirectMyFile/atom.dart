@@ -97,9 +97,8 @@ class Workspace {
   }
 
   Panel _addPanel(String type, Element item, bool visible, int priority) {
-    return new Panel(obj.callMethod(type, [
-      jsify({"item": item, "visible": visible, "priority": priority})
-    ]));
+    return new Panel(obj.callMethod(type,
+        [jsify({"item": item, "visible": visible, "priority": priority})]));
   }
 
   List<Panel> _panels(String type) {

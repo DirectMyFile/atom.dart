@@ -157,13 +157,11 @@ class Atom extends ProxyHolder {
       }
     }
 
-    return invoke("confirm",
-      omap({
-        "message": message,
-        "detailedMessage": detailedMessage,
-        "buttons": buttons
-      })
-    );
+    return invoke("confirm", omap({
+      "message": message,
+      "detailedMessage": detailedMessage,
+      "buttons": buttons
+    }));
   }
 
   bool get isDevMode => invoke("isDevMode");
