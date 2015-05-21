@@ -93,27 +93,41 @@ class Clipboard extends ProxyHolder {
 }
 
 class Atom extends ProxyHolder {
+  Workspace _workspace;
+  CommandRegistry _commands;
+  PackageManager _packages;
+  StyleManager _styles;
+  ThemeManager _themes;
+  MenuManager _menu;
+  Clipboard _clipboard;
+  ContextMenuManager _contextMenu;
+  TooltipManager _tooltips;
+  Config _config;
+
   Atom() : super(global["atom"]) {
-    workspace = new Workspace(obj["workspace"]);
-    commands = new CommandRegistry(obj["commands"]);
-    packages = new PackageManager(obj["packages"]);
-    styles = new StyleManager(obj["styles"]);
-    themes = new ThemeManager(obj["themes"]);
-    menu = new MenuManager(obj["menu"]);
-    clipboard = new Clipboard(obj["clipboard"]);
-    contextMenu = new ContextMenuManager(obj["contextMenu"]);
-    tooltips = new TooltipManager(obj["tooltips"]);
+    _workspace = new Workspace(obj["workspace"]);
+    _commands = new CommandRegistry(obj["commands"]);
+    _packages = new PackageManager(obj["packages"]);
+    _styles = new StyleManager(obj["styles"]);
+    _themes = new ThemeManager(obj["themes"]);
+    _menu = new MenuManager(obj["menu"]);
+    _clipboard = new Clipboard(obj["clipboard"]);
+    _contextMenu = new ContextMenuManager(obj["contextMenu"]);
+    _tooltips = new TooltipManager(obj["tooltips"]);
+    _config = new Config(obj["config"]);
   }
 
-  Workspace workspace;
-  CommandRegistry commands;
-  PackageManager packages;
-  StyleManager styles;
-  ThemeManager themes;
-  MenuManager menu;
-  Clipboard clipboard;
-  ContextMenuManager contextMenu;
-  TooltipManager tooltips;
+  Workspace get workspace => _workspace;
+  CommandRegistry get commands => _commands;
+  PackageManager get packages => _packages;
+  StyleManager get styles => _styles;
+  ThemeManager get themes => _themes;
+  MenuManager get menu => _menu;
+  Clipboard get clipboard => _clipboard;
+  ContextMenuManager get contextMenu => _contextMenu;
+  TooltipManager get tooltips => _tooltips;
+  Config get config => _config;
+
   Project get project => new Project(obj["project"]);
   NotificationManager get notifications =>
       new NotificationManager(obj['notifications']);

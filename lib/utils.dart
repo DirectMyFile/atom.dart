@@ -52,6 +52,7 @@ class Promise {
 
 abstract class ProxyHolder extends Object {
   final js.JsObject obj;
+
   ProxyHolder(this.obj);
 
   dynamic invoke(String method, [dynamic arg1, dynamic arg2, dynamic arg3]) {
