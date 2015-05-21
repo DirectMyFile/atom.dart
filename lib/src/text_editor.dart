@@ -20,11 +20,14 @@ class TextEditor {
   int get screenLineCount => obj.callMethod("getScreenLineCount");
   int get lastScreenRow => obj.callMethod("getLastScreenRow");
 
-  String lineTextForBufferRow(int row) => obj.callMethod("lineTextForBufferRow", [row]);
-  String lineTextForScreenRow(int row) => obj.callMethod("lineTextForScreenRow", [row]);
+  String lineTextForBufferRow(int row) =>
+      obj.callMethod("lineTextForBufferRow", [row]);
+  String lineTextForScreenRow(int row) =>
+      obj.callMethod("lineTextForScreenRow", [row]);
 
   set text(value) => obj.callMethod("setText", [value.toString()]);
-  void setTextInBufferRange(Range range, String text) => obj.callMethod("setTextInBufferRange", [
+  void setTextInBufferRange(Range range, String text) => obj.callMethod(
+      "setTextInBufferRange", [
     [range.start.row, range.start.column],
     [range.end.row, range.end.column]
   ]);
@@ -41,12 +44,18 @@ class TextEditor {
 
   String get selectedText => obj.callMethod("getSelectedText");
 
-  Disposable onDidChange(Action callback) => new Disposable(obj.callMethod("onDidChange", [callback]));
-  Disposable onDidChangePath(Action callback) => new Disposable(obj.callMethod("onDidChangePath", [callback]));
-  Disposable onDidChangeTitle(Action callback) => new Disposable(obj.callMethod("onDidChangeTitle", [callback]));
-  Disposable onDidStopChanging(Action callback) => new Disposable(obj.callMethod("onDidStopChanging", [callback]));
-  Disposable onDidSave(Action callback) => new Disposable(obj.callMethod("onDidSave", [(e) => callback()]));
-  Disposable onDidDestroy(Action callback) => new Disposable(obj.callMethod("onDidDestroy", [callback]));
+  Disposable onDidChange(Action callback) =>
+      new Disposable(obj.callMethod("onDidChange", [callback]));
+  Disposable onDidChangePath(Action callback) =>
+      new Disposable(obj.callMethod("onDidChangePath", [callback]));
+  Disposable onDidChangeTitle(Action callback) =>
+      new Disposable(obj.callMethod("onDidChangeTitle", [callback]));
+  Disposable onDidStopChanging(Action callback) =>
+      new Disposable(obj.callMethod("onDidStopChanging", [callback]));
+  Disposable onDidSave(Action callback) =>
+      new Disposable(obj.callMethod("onDidSave", [(e) => callback()]));
+  Disposable onDidDestroy(Action callback) =>
+      new Disposable(obj.callMethod("onDidDestroy", [callback]));
 
   void save() {
     obj.callMethod("save");
@@ -104,52 +113,55 @@ class TextEditor {
   set encoding(String name) => obj.callMethod("setEncoding", [name]);
 
   Disposable onDidAddCursor(Consumer<Cursor> callback) {
-    return new Disposable(obj.callMethod("onDidAddCursor", [
-        (e) => callback(new Cursor(e))
-    ]));
+    return new Disposable(
+        obj.callMethod("onDidAddCursor", [(e) => callback(new Cursor(e))]));
   }
 
   Disposable onDidRemoveCursor(Consumer<Cursor> callback) {
-    return new Disposable(obj.callMethod("onDidRemoveCursor", [
-        (e) => callback(new Cursor(e))
-    ]));
+    return new Disposable(
+        obj.callMethod("onDidRemoveCursor", [(e) => callback(new Cursor(e))]));
   }
 
   Disposable onWillInsertText(Consumer<WillInsertTextEvent> callback) {
-    return new Disposable(obj.callMethod("onWillInsertText", [
-      (e) => callback(new WillInsertTextEvent(e))
-    ]));
+    return new Disposable(obj.callMethod(
+        "onWillInsertText", [(e) => callback(new WillInsertTextEvent(e))]));
   }
 
-  Disposable onDidConflict(Action callback) => new Disposable(obj.callMethod("onDidConflict", [callback]));
-  Disposable onDidInsertText(Consumer<DidInsertTextEvent> callback) => new Disposable(obj.callMethod("onDidInsertText", [
-    (e) => new DidInsertTextEvent(e)
-  ]));
+  Disposable onDidConflict(Action callback) =>
+      new Disposable(obj.callMethod("onDidConflict", [callback]));
+  Disposable onDidInsertText(
+      Consumer<DidInsertTextEvent> callback) => new Disposable(
+      obj.callMethod("onDidInsertText", [(e) => new DidInsertTextEvent(e)]));
 
   Disposable onDidChangeGrammar(Consumer<Grammar> callback) {
-    return new Disposable(obj.callMethod("onDidChangeGrammar", [(e) => callback(new Grammar(e))]));
+    return new Disposable(obj.callMethod(
+        "onDidChangeGrammar", [(e) => callback(new Grammar(e))]));
   }
 
   Disposable onDidAddSelection(Consumer<Selection> callback) {
-    return new Disposable(obj.callMethod("onDidAddSelection", [(e) => callback(new Selection(e))]));
+    return new Disposable(obj.callMethod(
+        "onDidAddSelection", [(e) => callback(new Selection(e))]));
   }
 
   Disposable onDidRemoveSelection(Consumer<Selection> callback) {
-    return new Disposable(obj.callMethod("onDidRemoveSelection", [(e) => callback(new Selection(e))]));
+    return new Disposable(obj.callMethod(
+        "onDidRemoveSelection", [(e) => callback(new Selection(e))]));
   }
 
-  ScopeDescriptor get rootScopeDescriptor => new ScopeDescriptor.wrap(obj.callMethod("getRootScopeDescriptor"));
+  ScopeDescriptor get rootScopeDescriptor =>
+      new ScopeDescriptor.wrap(obj.callMethod("getRootScopeDescriptor"));
   ScopeDescriptor scopeDescriptorForBufferPosition(f) =>
-    new ScopeDescriptor.wrap(obj.callMethod("scopeDescriptorForBufferPosition", [f is Point ? f.toJS() : f]));
+      new ScopeDescriptor.wrap(obj.callMethod(
+          "scopeDescriptorForBufferPosition", [f is Point ? f.toJS() : f]));
 
   Disposable observeGrammar(Consumer<Grammar> callback) {
-    return new Disposable(obj.callMethod("observeGrammar", [(e) => callback(new Grammar(e))]));
+    return new Disposable(
+        obj.callMethod("observeGrammar", [(e) => callback(new Grammar(e))]));
   }
 
   Disposable observeCursors(Consumer<Cursor> callback) {
-    return new Disposable(obj.callMethod("observeCursors", [
-        (e) => callback(new Cursor(e))
-    ]));
+    return new Disposable(
+        obj.callMethod("observeCursors", [(e) => callback(new Cursor(e))]));
   }
 
   bool get isSoftWrapped => obj.callMethod("isSoftWrapped");
@@ -217,7 +229,8 @@ class TextEditor {
   void unfoldAll() => obj.callMethod("unfoldAll");
 
   String get placeholderText => obj.callMethod("getPlaceholderText");
-  set placeholderText(String text) => obj.callMethod("setPlaceholderText", [text]);
+  set placeholderText(String text) =>
+      obj.callMethod("setPlaceholderText", [text]);
 
   void scrollToTop() {
     obj.callMethod("scrollToTop");
@@ -229,11 +242,15 @@ class TextEditor {
 
   bool get hasMultipleCursors => obj.callMethod("hasMultipleCursors");
 
-  Point get cursorBufferPosition => new Point.fromJS(obj.callMethod("getCursorBufferPosition"));
-  List<Point> get cursorBufferPositions =>
-    obj.callMethod("getCursorBufferPositions").map((it) => new Position.fromJS(it)).toList();
+  Point get cursorBufferPosition =>
+      new Point.fromJS(obj.callMethod("getCursorBufferPosition"));
+  List<Point> get cursorBufferPositions => obj
+      .callMethod("getCursorBufferPositions")
+      .map((it) => new Position.fromJS(it))
+      .toList();
 
-  List<Cursor> get cursors => obj.callMethod("getCursors").map((it) => new Cursor(it)).toList();
+  List<Cursor> get cursors =>
+      obj.callMethod("getCursors").map((it) => new Cursor(it)).toList();
   Cursor get lastCursor => new Cursor(obj.callMethod("getLastCursor"));
 
   void moveUp([int lineCount]) {
@@ -268,33 +285,29 @@ class TextEditor {
     obj.callMethod("moveToBottom");
   }
 
-  Selection get lastSelection => new Selection(obj.callMethod("getLastSelection"));
-  List<Selection> get selections => obj.callMethod("getSelections").map((it) =>
-    new Selection(it)
-  ).toList();
+  Selection get lastSelection =>
+      new Selection(obj.callMethod("getLastSelection"));
+  List<Selection> get selections =>
+      obj.callMethod("getSelections").map((it) => new Selection(it)).toList();
 
   Disposable observeDecorations(Consumer<Decoration> callback) {
-    return new Disposable(obj.callMethod("observeDecorations", [
-      (e) => callback(new Decoration(e))
-    ]));
+    return new Disposable(obj.callMethod(
+        "observeDecorations", [(e) => callback(new Decoration(e))]));
   }
 
   Disposable onDidAddDecoration(Consumer<Decoration> callback) {
-    return new Disposable(obj.callMethod("onDidAddDecoration", [
-      (e) => callback(new Decoration(e))
-    ]));
+    return new Disposable(obj.callMethod(
+        "onDidAddDecoration", [(e) => callback(new Decoration(e))]));
   }
 
   Disposable onDidRemoveDecoration(Consumer<Decoration> callback) {
-    return new Disposable(obj.callMethod("onDidRemoveDecoration", [
-        (e) => callback(new Decoration(e))
-    ]));
+    return new Disposable(obj.callMethod(
+        "onDidRemoveDecoration", [(e) => callback(new Decoration(e))]));
   }
 
   Disposable onDidChangePlaceholderText(Consumer<String> callback) {
-    return new Disposable(obj.callMethod("onDidChangePlaceholderText", [
-      (e) => callback(e)
-    ]));
+    return new Disposable(
+        obj.callMethod("onDidChangePlaceholderText", [(e) => callback(e)]));
   }
 }
 
@@ -309,37 +322,29 @@ class Selection {
 
   Range get screenRange => new RangeProxy(obj.callMethod("getScreenRange"));
   Range get bufferRange => new RangeProxy(obj.callMethod("getBufferRange"));
-  void setScreenRange(Range range, {bool preserveFolds, bool autoScroll}) => obj.callMethod("setScreenRange", [
-    [
-      [range.start.row, range.start.column],
-      [range.end.row, range.end.column]
-    ],
-    omap({
-      "preserveFolds": preserveFolds,
-      "autoScroll": autoScroll
-    })
+  void setScreenRange(Range range, {bool preserveFolds, bool autoScroll}) => obj
+      .callMethod("setScreenRange", [
+    [[range.start.row, range.start.column], [range.end.row, range.end.column]],
+    omap({"preserveFolds": preserveFolds, "autoScroll": autoScroll})
   ]);
 
-  void setBufferRange(Range range, {bool preserveFolds, bool autoScroll}) => obj.callMethod("setScreenRange", [
-    [
-      [range.start.row, range.start.column],
-      [range.end.row, range.end.column]
-    ],
-    omap({
-      "preserveFolds": preserveFolds,
-      "autoScroll": autoScroll
-    })
+  void setBufferRange(Range range, {bool preserveFolds, bool autoScroll}) => obj
+      .callMethod("setScreenRange", [
+    [[range.start.row, range.start.column], [range.end.row, range.end.column]],
+    omap({"preserveFolds": preserveFolds, "autoScroll": autoScroll})
   ]);
 
   bool get isEmpty => obj.callMethod("isEmpty");
   bool get isReversed => obj.callMethod("isReversed");
   String get text => obj.callMethod("getText");
   bool get isSingleScreenLine => obj.callMethod("isSingleScreenLine");
-  bool intersectsBufferRange(Range range) => obj.callMethod("intersectsBufferRange", [
+  bool intersectsBufferRange(Range range) => obj.callMethod(
+      "intersectsBufferRange", [
     [range.start.row, range.start.column],
     [range.end.row, range.end.column]
   ]);
-  bool intersectsWith(Selection selection) => intersectsBufferRange(selection.bufferRange);
+  bool intersectsWith(Selection selection) =>
+      intersectsBufferRange(selection.bufferRange);
 
   void insertText(String text) {
     obj.callMethod("insertText", [text]);
@@ -407,7 +412,6 @@ class RangeProxy implements Range {
   @override
   bool get isSingleLine => obj.callMethod("isSingleLine");
 
-
   @override
   int get rowCount => obj.callMethod("getRowCount");
 
@@ -428,24 +432,25 @@ class Cursor {
     return new Disposable(obj.callMethod("onDidDestroy", [callback]));
   }
 
-  Disposable onDidChangePosition(Consumer<CursorPositionChangedEvent> callback) {
-    return new Disposable(obj.callMethod("onDidChangePosition", [
-      (e) => callback(new CursorPositionChangedEvent(e))
-    ]));
+  Disposable onDidChangePosition(
+      Consumer<CursorPositionChangedEvent> callback) {
+    return new Disposable(obj.callMethod("onDidChangePosition",
+        [(e) => callback(new CursorPositionChangedEvent(e))]));
   }
 
   Disposable onDidChangeVisibility(Consumer<bool> callback) {
-    return new Disposable(obj.callMethod("onDidChangeVisibility", [
-      (e) => callback(e["visibility"])
-    ]));
+    return new Disposable(obj.callMethod(
+        "onDidChangeVisibility", [(e) => callback(e["visibility"])]));
   }
 
   bool get isLastCursor => obj.callMethod("isLastCursor");
   int get indentLevel => obj.callMethod("getIndentLevel");
-  bool get isSurroundedByWhitespace => obj.callMethod("isSurroundedByWhitespace");
+  bool get isSurroundedByWhitespace =>
+      obj.callMethod("isSurroundedByWhitespace");
   bool get isBetweenWordAndNonWord => obj.callMethod("isBetweenWordAndNonWord");
   bool get isVisible => obj.callMethod("isVisible");
-  bool get hasPrecedingCharactersOnLine => obj.callMethod("hasPrecedingCharactersOnLine");
+  bool get hasPrecedingCharactersOnLine =>
+      obj.callMethod("hasPrecedingCharactersOnLine");
 
   bool get isAtBeginningOfLine => obj.callMethod("isAtBeginningOfLine");
   bool get isAtEndOfLine => obj.callMethod("isAtEndOfLine");
@@ -462,15 +467,13 @@ class Cursor {
   int get screenColumn => obj.callMethod("getScreenColumn");
 
   void setScreenPosition(int row, int column, {bool autoscroll}) {
-    obj.callMethod("setScreenPosition", [[row, column], omap({
-      "autoscroll": autoscroll
-    })]);
+    obj.callMethod(
+        "setScreenPosition", [[row, column], omap({"autoscroll": autoscroll})]);
   }
 
   void setBufferPosition(int row, int column, {bool autoscroll}) {
-    obj.callMethod("setBufferPosition", [[row, column], omap({
-      "autoscroll": autoscroll
-    })]);
+    obj.callMethod(
+        "setBufferPosition", [[row, column], omap({"autoscroll": autoscroll})]);
   }
 
   String get currentWordPrefix => obj.callMethod("getCurrentWordPrefix");
@@ -502,10 +505,7 @@ class Point {
   Point.fromJS(js.JsObject obj) : this(obj["row"], obj["column"]);
 
   js.JsObject toJS() {
-    return new js.JsObject.jsify({
-      "row": row,
-      "column": column
-    });
+    return new js.JsObject.jsify({"row": row, "column": column});
   }
 }
 
@@ -542,16 +542,21 @@ class Decoration {
     return new Disposable(obj.callMethod("onDidDestroy", [callback]));
   }
 
-  Disposable onDidChangeProperties(Consumer<DecorationPropertiesChangeEvent> callback) {
-    return new Disposable(obj.callMethod("onDidChangeProperties", [(o) {
-      return callback(new DecorationPropertiesChangeEvent(o["oldProperties"], o["newProperties"]));
-    }]));
+  Disposable onDidChangeProperties(
+      Consumer<DecorationPropertiesChangeEvent> callback) {
+    return new Disposable(obj.callMethod("onDidChangeProperties", [
+      (o) {
+        return callback(new DecorationPropertiesChangeEvent(
+            o["oldProperties"], o["newProperties"]));
+      }
+    ]));
   }
 
   get id => obj.callMethod("getId");
 
   js.JsObject get properties => obj.callMethod("getProperties");
-  set properties(js.JsObject properties) => obj.callMethod("setProperties", [properties]);
+  set properties(js.JsObject properties) =>
+      obj.callMethod("setProperties", [properties]);
 }
 
 class DecorationPropertiesChangeEvent {

@@ -1,7 +1,6 @@
 part of atom;
 
 class NotificationManager {
-
   final js.JsObject obj;
 
   NotificationManager(this.obj);
@@ -37,5 +36,4 @@ class NotificationManager {
     var optionsJsObj = new js.JsObject.jsify(options);
     obj.callMethod('addFatalError', [message, optionsJsObj]);
   }
-
 }

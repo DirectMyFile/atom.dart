@@ -44,20 +44,19 @@ class Pane {
   }
 
   Disposable onDidAddItem(Consumer<PaneItemAddRemoveEvent> callback) {
-    return new Disposable(obj.callMethod("onDidAddItem", [
-      (e) => callback(new PaneItemAddRemoveEvent(e["item"], e["index"]))
-    ]));
+    return new Disposable(obj.callMethod("onDidAddItem",
+        [(e) => callback(new PaneItemAddRemoveEvent(e["item"], e["index"]))]));
   }
 
   Disposable onDidRemoveItem(Consumer<PaneItemAddRemoveEvent> callback) {
-    return new Disposable(obj.callMethod("onDidRemoveItem", [
-        (e) => callback(new PaneItemAddRemoveEvent(e["item"], e["index"]))
-    ]));
+    return new Disposable(obj.callMethod("onDidRemoveItem",
+        [(e) => callback(new PaneItemAddRemoveEvent(e["item"], e["index"]))]));
   }
 
   Disposable onDidMoveItem(Consumer<PaneItemMoveEvent> callback) {
     return new Disposable(obj.callMethod("onDidMoveItem", [
-        (e) => callback(new PaneItemMoveEvent(e["item"], e["oldIndex"], e["newIndex"]))
+      (e) => callback(
+          new PaneItemMoveEvent(e["item"], e["oldIndex"], e["newIndex"]))
     ]));
   }
 
@@ -75,7 +74,7 @@ class Pane {
 
   Disposable onWillDestroyItem(Consumer<PaneItemWillDestroyEvent> callback) {
     return new Disposable(obj.callMethod("onWillDestroyItem", [
-        (e) => callback(new PaneItemWillDestroyEvent(e["item"], e["index"]))
+      (e) => callback(new PaneItemWillDestroyEvent(e["item"], e["index"]))
     ]));
   }
 
@@ -174,30 +173,22 @@ class Pane {
   void destroy() => obj.callMethod("destroy");
 
   Pane splitLeft({List<dynamic> items, bool copyActiveItem}) {
-    return new Pane(obj.callMethod("splitLeft", [toJsObject({
-      "items": items,
-      "copyActiveItem": copyActiveItem
-    })]));
+    return new Pane(obj.callMethod("splitLeft",
+        [toJsObject({"items": items, "copyActiveItem": copyActiveItem})]));
   }
 
   Pane splitRight({List<dynamic> items, bool copyActiveItem}) {
-    return new Pane(obj.callMethod("splitRight", [toJsObject({
-      "items": items,
-      "copyActiveItem": copyActiveItem
-    })]));
+    return new Pane(obj.callMethod("splitRight",
+        [toJsObject({"items": items, "copyActiveItem": copyActiveItem})]));
   }
 
   Pane splitUp({List<dynamic> items, bool copyActiveItem}) {
-    return new Pane(obj.callMethod("splitUp", [toJsObject({
-      "items": items,
-      "copyActiveItem": copyActiveItem
-    })]));
+    return new Pane(obj.callMethod("splitUp",
+        [toJsObject({"items": items, "copyActiveItem": copyActiveItem})]));
   }
 
   Pane splitDown({List<dynamic> items, bool copyActiveItem}) {
-    return new Pane(obj.callMethod("splitUp", [toJsObject({
-      "items": items,
-      "copyActiveItem": copyActiveItem
-    })]));
+    return new Pane(obj.callMethod("splitUp",
+        [toJsObject({"items": items, "copyActiveItem": copyActiveItem})]));
   }
 }

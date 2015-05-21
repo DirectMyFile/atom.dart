@@ -1,7 +1,8 @@
 part of atom;
 
 class Color {
-  static Color parse(String input) => new Color(global["Color"].callMethod("parse"));
+  static Color parse(String input) =>
+      new Color(global["Color"].callMethod("parse"));
 
   final js.JsObject obj;
 

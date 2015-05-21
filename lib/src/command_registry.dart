@@ -6,12 +6,6 @@ class CommandRegistry {
   CommandRegistry(this.o);
 
   Disposable add(String target, String command, void callback(event)) {
-    return new Disposable(
-      o.callMethod("add", [
-        target,
-        command,
-        callback
-      ])
-    );
+    return new Disposable(o.callMethod("add", [target, command, callback]));
   }
 }

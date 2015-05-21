@@ -6,9 +6,9 @@ class TooltipManager {
   TooltipManager(this.obj);
 
   Disposable add(target, String title, {String keyBindingCommand}) {
-    return new Disposable(obj.callMethod("add", [target, omap({
-      "title": title,
-      "keyBindingCommand": keyBindingCommand
-    })]));
+    return new Disposable(obj.callMethod("add", [
+      target,
+      omap({"title": title, "keyBindingCommand": keyBindingCommand})
+    ]));
   }
 }

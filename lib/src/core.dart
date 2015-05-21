@@ -90,7 +90,8 @@ class Clipboard {
   Clipboard(this.obj);
 
   String read() => obj.callMethod("read");
-  ClipboardContent readWithMetadata() => new ClipboardContent(obj["text"], obj["metadata"]);
+  ClipboardContent readWithMetadata() =>
+      new ClipboardContent(obj["text"], obj["metadata"]);
 
   void write(String text, [Map metadata = const {}]) {
     var j = toJsObject(metadata);
@@ -124,7 +125,8 @@ class Atom {
   ContextMenuManager contextMenu;
   TooltipManager tooltips;
   Project get project => new Project(o["project"]);
-  NotificationManager get notifications => new NotificationManager(o['notifications']);
+  NotificationManager get notifications =>
+      new NotificationManager(o['notifications']);
 
   void open(List<String> paths, {bool newWindow, bool devMode, bool safeMode}) {
     var opts = omap({
@@ -164,7 +166,8 @@ class Atom {
   int confirm(String message, {String detailedMessage, buttons}) {
     if (buttons != null) {
       if (buttons is! List<String> && buttons is! Map<String, Function>) {
-        throw new ArgumentError.value(buttons, "buttons", "Should be either a List<String> or a Map<String, Function>");
+        throw new ArgumentError.value(buttons, "buttons",
+            "Should be either a List<String> or a Map<String, Function>");
       }
     }
 
@@ -188,7 +191,8 @@ class Atom {
 
   void openDevTools() => o.callMethod("openDevTools");
   void toggleDevTools() => o.callMethod("toggleDevTools");
-  void executeJavaScriptInDevTools(String code) => o.callMethod("executeJavaScriptInDevTools", [code]);
+  void executeJavaScriptInDevTools(String code) =>
+      o.callMethod("executeJavaScriptInDevTools", [code]);
 
   void show() => o.callMethod("show");
   void hide() => o.callMethod("hide");

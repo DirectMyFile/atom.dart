@@ -14,9 +14,9 @@ void main() {
 
 Map<String, String> loadOurAPI() {
   var result = Process.runSync(
-    Platform.isWindows ? "dartdocgen.bat" : "dartdocgen",
-    "--no-include-sdk --package-root=packages --indent-json lib/atom.dart".split(" ")
-  );
+      Platform.isWindows ? "dartdocgen.bat" : "dartdocgen",
+      "--no-include-sdk --package-root=packages --indent-json lib/atom.dart"
+          .split(" "));
 
   if (result.exitCode != 0) {
     print("Failed to generate our documentation!");
@@ -69,5 +69,6 @@ class AtomClass {
 }
 
 AtomApi loadAtomAPI() {
-  return new AtomApi.fromJSON(JSON.decode(new File("tool/atom-api.json").readAsStringSync()));
+  return new AtomApi.fromJSON(
+      JSON.decode(new File("tool/atom-api.json").readAsStringSync()));
 }

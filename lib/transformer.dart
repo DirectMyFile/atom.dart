@@ -16,7 +16,10 @@ class AtomBuildTransformer extends Transformer {
   }
 
   String _fixScript(String input) {
-    return HEADER + "\n" + input.replaceAll(r'if (typeof document === "undefined") {', "if (true) {");
+    return HEADER +
+        "\n" +
+        input.replaceAll(
+            r'if (typeof document === "undefined") {', "if (true) {");
   }
 
   final String HEADER = """

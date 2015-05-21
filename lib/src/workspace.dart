@@ -5,14 +5,20 @@ class Workspace {
 
   Workspace(this.obj);
 
-  TextEditor get activeTextEditor => new TextEditor.wrap(obj.callMethod("getActiveTextEditor"));
-  List<TextEditor> get textEditors => obj.callMethod("getTextEditors").map((it) => new TextEditor.wrap(it)).toList();
+  TextEditor get activeTextEditor =>
+      new TextEditor.wrap(obj.callMethod("getActiveTextEditor"));
+  List<TextEditor> get textEditors => obj
+      .callMethod("getTextEditors")
+      .map((it) => new TextEditor.wrap(it))
+      .toList();
 
   Disposable observeTextEditors(Consumer<TextEditor> callback) {
-    return new Disposable(obj.callMethod("observeTextEditors", [(o) => callback(new TextEditor.wrap(o))]));
+    return new Disposable(obj.callMethod(
+        "observeTextEditors", [(o) => callback(new TextEditor.wrap(o))]));
   }
 
-  Future<TextEditor> open(String uri, {int initialLine, int initialColumn, String split, bool activatePane, bool searchAllPanes}) async {
+  Future<TextEditor> open(String uri, {int initialLine, int initialColumn,
+      String split, bool activatePane, bool searchAllPanes}) async {
     var map = omap({
       "initialLine": initialLine,
       "initialColumn": initialColumn,
@@ -21,9 +27,8 @@ class Workspace {
       "searchAllPanes": searchAllPanes
     });
 
-    return new TextEditor.wrap(await promiseToFuture(
-      obj.callMethod("open", [uri, map])
-    ));
+    return new TextEditor.wrap(
+        await promiseToFuture(obj.callMethod("open", [uri, map])));
   }
 
   Future reopenItem() => promiseToFuture(obj.callMethod("reopenItem"));
@@ -32,21 +37,22 @@ class Workspace {
   }
 
   Panel addTopPanel(Element item, {bool visible: true, int priority: 100}) =>
-    _addPanel("addTopPanel", item, visible, priority);
+      _addPanel("addTopPanel", item, visible, priority);
 
   Panel addRightPanel(Element item, {bool visible: true, int priority: 100}) =>
-    _addPanel("addRightPanel", item, visible, priority);
+      _addPanel("addRightPanel", item, visible, priority);
 
   Panel addLeftPanel(Element item, {bool visible: true, int priority: 100}) =>
-    _addPanel("addLeftPanel", item, visible, priority);
+      _addPanel("addLeftPanel", item, visible, priority);
 
   Panel addBottomPanel(Element item, {bool visible: true, int priority: 100}) =>
-    _addPanel("addBottomPanel", item, visible, priority);
+      _addPanel("addBottomPanel", item, visible, priority);
 
   Panel addModalPanel(Element item, {bool visible: true, int priority: 100}) =>
-    _addPanel("addModalPanel", item, visible, priority);
+      _addPanel("addModalPanel", item, visible, priority);
 
-  List<Pane> get panes => obj.callMethod("getPanes").map((it) => new Pane(it)).toList();
+  List<Pane> get panes =>
+      obj.callMethod("getPanes").map((it) => new Pane(it)).toList();
   Pane get activePane => new Pane(obj.callMethod("getActivePane"));
   void activateNextPane() {
     obj.callMethod("activateNextPane");
@@ -92,11 +98,7 @@ class Workspace {
 
   Panel _addPanel(String type, Element item, bool visible, int priority) {
     return new Panel(obj.callMethod(type, [
-      toJsObject({
-        "item": item,
-        "visible": visible,
-        "priority": priority
-      })
+      toJsObject({"item": item, "visible": visible, "priority": priority})
     ]));
   }
 

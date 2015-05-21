@@ -28,7 +28,10 @@ class PackageManager {
     return obj.callMethod("isPackageLoaded", [name]);
   }
 
-  List<String> get availablePackagePaths => obj.callMethod("getAvailablePackagePath");
-  List<String> get availablePackageNames => obj.callMethod("getAvailablePackageNames");
-  List<String> get availablePackageMetadata => obj.callMethod("getAvailablePackageMetadata");
+  List<String> get availablePackagePaths =>
+      obj.callMethod("getAvailablePackagePath");
+  List<String> get availablePackageNames =>
+      obj.callMethod("getAvailablePackageNames");
+  List<String> get availablePackageMetadata =>
+      obj.callMethod("getAvailablePackageMetadata");
 }
