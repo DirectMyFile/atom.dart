@@ -6,7 +6,7 @@ class KeymapManager {
   KeymapManager(this.obj);
 
   void add(String selector, Map<String, Map<String, String>> bindings) {
-    var o = toJsObject(bindings);
+    var o = jsify(bindings);
 
     obj.callMethod("add", [selector, o]);
   }

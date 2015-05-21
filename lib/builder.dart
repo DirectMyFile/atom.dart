@@ -17,8 +17,13 @@ class Menu {
 
   String command;
 
-  Menu(this.label) : submenus = [], contextMenu = false, selector = null;
-  Menu.root(this.label, {this.contextMenu: false, this.selector}) : _root = true, submenus = [];
+  Menu(this.label)
+      : submenus = [],
+        contextMenu = false,
+        selector = null;
+  Menu.root(this.label, {this.contextMenu: false, this.selector})
+      : _root = true,
+        submenus = [];
 
   void addSubMenu(Menu menu) {
     submenus.add(menu);
@@ -50,20 +55,14 @@ class Menu {
     if (isRoot) {
       if (contextMenu) {
         return {
-          "context-menu": {
-            selector: submenus.map((it) => it.toJSON()).toList()
-          }
+          "context-menu": {selector: submenus.map((it) => it.toJSON()).toList()}
         };
       } else {
-        return {
-          "menu": submenus.map((it) => it.toJSON()).toList()
-        };
+        return {"menu": submenus.map((it) => it.toJSON()).toList()};
       }
     }
 
-    var map = {
-      "label": label
-    };
+    var map = {"label": label};
 
     if (command != null) {
       map["command"] = command;
@@ -92,7 +91,8 @@ class KeyMap {
     return this;
   }
 
-  KeyMap add(String block, String key, String command) => map(block, key, command);
+  KeyMap add(String block, String key, String command) =>
+      map(block, key, command);
 
   Map toJSON() => mappings;
 }
@@ -115,7 +115,8 @@ class Stylesheet {
       buff.writeln("${block.selector} {");
       var str = block.build();
 
-      buff.writeln((str.isNotEmpty ? "  " : "") + str.split("\n").map((it) => "  ${it}").join("\n").trim());
+      buff.writeln((str.isNotEmpty ? "  " : "") +
+          str.split("\n").map((it) => "  ${it}").join("\n").trim());
       buff.writeln("}");
     }
     return buff.toString();
@@ -146,7 +147,8 @@ class StyleBlock {
       buff.writeln("${block.selector} {");
       var str = block.build();
 
-      buff.writeln((str.isNotEmpty ? "  " : "") + str.split("\n").map((it) => "  ${it}").join("\n"));
+      buff.writeln((str.isNotEmpty ? "  " : "") +
+          str.split("\n").map((it) => "  ${it}").join("\n"));
       buff.writeln("}");
     }
 
@@ -236,7 +238,8 @@ class Package {
 Package _package;
 List<Grammar> _grammars = [];
 
-Package package(String name, String version, {String main, String license, String repository, String description}) {
+Package package(String name, String version,
+    {String main, String license, String repository, String description}) {
   var m = new Package(name, version);
 
   if (main != null) {
@@ -263,13 +266,15 @@ void build() {
   for (var m in _menuFiles) {
     var file = new File("menus/${m.label}.json");
     file.createSync(recursive: true);
-    file.writeAsStringSync(new JsonEncoder.withIndent("  ").convert(m.toJSON()));
+    file.writeAsStringSync(
+        new JsonEncoder.withIndent("  ").convert(m.toJSON()));
   }
 
   for (var m in _keymaps) {
     var file = new File("keymaps/${m.name}.json");
     file.createSync(recursive: true);
-    file.writeAsStringSync(new JsonEncoder.withIndent("  ").convert(m.toJSON()));
+    file.writeAsStringSync(
+        new JsonEncoder.withIndent("  ").convert(m.toJSON()));
   }
 
   for (var m in _stylesheets) {
@@ -281,7 +286,8 @@ void build() {
   for (var m in _grammars) {
     var file = new File("grammars/${m.name}.json");
     file.createSync(recursive: true);
-    file.writeAsStringSync(new JsonEncoder.withIndent("  ").convert(m.toJSON()));
+    file.writeAsStringSync(
+        new JsonEncoder.withIndent("  ").convert(m.toJSON()));
   }
 
   if (_package != null) {
@@ -304,8 +310,10 @@ class Grammar {
     return this;
   }
 
-  void load(void handler(void match(String name, String pattern), void beginEnd(name, String begin, String end, [patterns]))) {
-    handler((name, p) => pattern(new MatchGrammarPattern(name, p)), (name, begin, end, [patterns]) {
+  void load(void handler(void match(String name, String pattern),
+      void beginEnd(name, String begin, String end, [patterns]))) {
+    handler((name, p) => pattern(new MatchGrammarPattern(name, p)),
+        (name, begin, end, [patterns]) {
       pattern(new BeginEndGrammarPattern(name, begin, end, patterns));
     });
   }
@@ -335,10 +343,7 @@ class MatchGrammarPattern extends GrammarPattern {
   MatchGrammarPattern(this.name, this.match);
 
   @override
-  Map toJSON() => {
-    "name": name,
-    "match": match
-  };
+  Map toJSON() => {"name": name, "match": match};
 }
 
 class BeginEndGrammarPattern extends GrammarPattern {
@@ -351,11 +356,7 @@ class BeginEndGrammarPattern extends GrammarPattern {
 
   @override
   Map toJSON() {
-    var map = {
-      "name": name,
-      "begin": begin,
-      "end": end
-    };
+    var map = {"name": name, "begin": begin, "end": end};
 
     if (patterns != null) {
       map["patterns"] = patterns.map((it) => it.toJSON()).toList();

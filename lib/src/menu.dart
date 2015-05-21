@@ -6,12 +6,10 @@ class Menu {
   final String command;
 
   Menu(this.label, {this.command}) : submenu = [];
-  Menu.fromJS(js.JsObject obj) :
-    label = obj["label"],
-    command = obj["command"],
-    submenu = (
-      obj["submenu"] == null ? null : fromArray(obj["submenu"])
-    );
+  Menu.fromJS(js.JsObject obj)
+      : label = obj["label"],
+        command = obj["command"],
+        submenu = (obj["submenu"] == null ? null : fromArray(obj["submenu"]));
 
   static List<Menu> fromArray(List<js.JsObject> objs) {
     return objs.map((it) => new Menu.fromJS(it)).toList();

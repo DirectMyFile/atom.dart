@@ -31,13 +31,12 @@ main(List<String> args) async {
 
 findScripts() async {
   var dir = new Directory(options.scriptScanDirectory);
-  scripts.addAll(
-    await dir.list(recursive: true)
+  scripts.addAll(await dir
+      .list(recursive: true)
       .where((it) => it is File && it.path.endsWith(".dart"))
       .map((it) => it.path.replaceAll(dir.parent.path + "/", ""))
       .where((it) => !it.contains("packages/"))
-      .toList()
-  );
+      .toList());
 
   var a = [];
   for (var p in scripts) {
@@ -90,7 +89,8 @@ compile() async {
   for (var script in scripts) {
     var js = getJsName(script);
     print("[Compile] ${script}");
-    await exec("${Platform.isWindows ? 'dart2js.bat' : 'dart2js'} --csp -o ${js} ${script}");
+    await exec(
+        "${Platform.isWindows ? 'dart2js.bat' : 'dart2js'} --csp -o ${js} ${script}");
     var file = new File(js);
     var content = await file.readAsString();
     content = fixScript(content);
@@ -115,15 +115,11 @@ exec(String command) async {
 String getJsName(String file) => file.replaceAll(".dart", ".js");
 
 cleanup({bool includeScripts: false}) async {
-  var files = scripts
-    .map(getJsName)
-    .expand((it) =>
-      ["${it}.deps"]
-        ..addAll(includeScripts ? [it] : [])
-        ..addAll((includeScripts && !isDevEnabled) ? ["${it}.map"] : [])
-    );
+  var files = scripts.map(getJsName).expand((it) => ["${it}.deps"]
+    ..addAll(includeScripts ? [it] : [])
+    ..addAll((includeScripts && !isDevEnabled) ? ["${it}.map"] : []));
   for (var name in files) {
-    var file =  new File(name);
+    var file = new File(name);
     if (await file.exists()) {
       await file.delete();
     }
@@ -140,7 +136,10 @@ runPackageScript() async {
 }
 
 String fixScript(String input) {
-  return HEADER + "\n" + input.replaceAll(r'if (typeof document === "undefined") {', "if (true) {");
+  return HEADER +
+      "\n" +
+      input.replaceAll(
+          r'if (typeof document === "undefined") {', "if (true) {");
 }
 
 final String HEADER = """

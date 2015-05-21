@@ -6,5 +6,4 @@ class StyleManager {
   StyleManager(this.obj);
 
   String get userStyleSheetPath => obj.callMethod("getUserStyleSheetPath");
-
 }

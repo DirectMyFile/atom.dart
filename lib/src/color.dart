@@ -1,14 +1,13 @@
 part of atom;
 
-class Color {
-  static Color parse(String input) => new Color(global["Color"].callMethod("parse"));
+class Color extends ProxyHolder {
+  static Color parse(String input) =>
+      new Color(global["Color"].callMethod("parse"));
 
-  final js.JsObject obj;
+  Color(js.JsObject obj) : super(obj);
 
-  Color(this.obj);
-
-  String toHexString() => obj.callMethod("toHexString");
-  String toRGBAString() => obj.callMethod("toRGBAString");
+  String toHexString() => invoke("toHexString");
+  String toRGBAString() => invoke("toRGBAString");
 
   int get red => obj["red"];
   int get green => obj["green"];
