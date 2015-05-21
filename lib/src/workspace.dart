@@ -98,7 +98,7 @@ class Workspace {
 
   Panel _addPanel(String type, Element item, bool visible, int priority) {
     return new Panel(obj.callMethod(type, [
-      toJsObject({"item": item, "visible": visible, "priority": priority})
+      jsify({"item": item, "visible": visible, "priority": priority})
     ]));
   }
 

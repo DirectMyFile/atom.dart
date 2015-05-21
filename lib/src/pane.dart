@@ -174,21 +174,21 @@ class Pane {
 
   Pane splitLeft({List<dynamic> items, bool copyActiveItem}) {
     return new Pane(obj.callMethod("splitLeft",
-        [toJsObject({"items": items, "copyActiveItem": copyActiveItem})]));
+        [jsify({"items": items, "copyActiveItem": copyActiveItem})]));
   }
 
   Pane splitRight({List<dynamic> items, bool copyActiveItem}) {
     return new Pane(obj.callMethod("splitRight",
-        [toJsObject({"items": items, "copyActiveItem": copyActiveItem})]));
+        [jsify({"items": items, "copyActiveItem": copyActiveItem})]));
   }
 
   Pane splitUp({List<dynamic> items, bool copyActiveItem}) {
     return new Pane(obj.callMethod("splitUp",
-        [toJsObject({"items": items, "copyActiveItem": copyActiveItem})]));
+        [jsify({"items": items, "copyActiveItem": copyActiveItem})]));
   }
 
   Pane splitDown({List<dynamic> items, bool copyActiveItem}) {
     return new Pane(obj.callMethod("splitUp",
-        [toJsObject({"items": items, "copyActiveItem": copyActiveItem})]));
+        [jsify({"items": items, "copyActiveItem": copyActiveItem})]));
   }
 }

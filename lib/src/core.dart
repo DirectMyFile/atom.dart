@@ -68,7 +68,7 @@ class ModuleExports {
   dynamic get(name) => obj[name.toString()];
 
   js.JsObject get config => obj["config"];
-  set config(input) => obj["config"] = toJsObject(input);
+  set config(input) => obj["config"] = jsify(input);
 
   operator [](name) {
     return get(name);
@@ -94,7 +94,7 @@ class Clipboard {
       new ClipboardContent(obj["text"], obj["metadata"]);
 
   void write(String text, [Map metadata = const {}]) {
-    var j = toJsObject(metadata);
+    var j = jsify(metadata);
 
     obj.callMethod("write", [text, j]);
   }

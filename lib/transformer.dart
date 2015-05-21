@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:io';
+
 import 'package:barback/barback.dart';
 
 class AtomBuildTransformer extends Transformer {
