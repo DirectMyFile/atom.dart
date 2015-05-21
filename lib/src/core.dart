@@ -41,12 +41,8 @@ void onPackageDeactivated(Action action) {
   _onDeactivate.add(action);
 }
 
-class ModuleExports {
-  js.JsObject obj;
-
-  ModuleExports() {
-    obj = global["module"]["exports"];
-  }
+class ModuleExports extends ProxyHolder {
+  ModuleExports() : super(global["module"]["exports"]);
 
   Function get activate => obj["activate"];
   set activate(Function function) {
@@ -84,35 +80,29 @@ class ClipboardContent {
   ClipboardContent(this.text, this.metadata);
 }
 
-class Clipboard {
-  final js.JsObject obj;
+class Clipboard extends ProxyHolder {
+  Clipboard(js.JsObject obj) : super(obj);
 
-  Clipboard(this.obj);
-
-  String read() => obj.callMethod("read");
+  String read() => invoke("read");
   ClipboardContent readWithMetadata() =>
       new ClipboardContent(obj["text"], obj["metadata"]);
 
   void write(String text, [Map metadata = const {}]) {
-    var j = jsify(metadata);
-
-    obj.callMethod("write", [text, j]);
+    invoke("write", text, metadata);
   }
 }
 
-class Atom {
-  static final js.JsObject o = js.context["atom"];
-
-  Atom() {
-    workspace = new Workspace(o["workspace"]);
-    commands = new CommandRegistry(o["commands"]);
-    packages = new PackageManager(o["packages"]);
-    styles = new StyleManager(o["styles"]);
-    themes = new ThemeManager(o["themes"]);
-    menu = new MenuManager(o["menu"]);
-    clipboard = new Clipboard(o["clipboard"]);
-    contextMenu = new ContextMenuManager(o["contextMenu"]);
-    tooltips = new TooltipManager(o["tooltips"]);
+class Atom extends ProxyHolder {
+  Atom() : super(global["atom"]) {
+    workspace = new Workspace(obj["workspace"]);
+    commands = new CommandRegistry(obj["commands"]);
+    packages = new PackageManager(obj["packages"]);
+    styles = new StyleManager(obj["styles"]);
+    themes = new ThemeManager(obj["themes"]);
+    menu = new MenuManager(obj["menu"]);
+    clipboard = new Clipboard(obj["clipboard"]);
+    contextMenu = new ContextMenuManager(obj["contextMenu"]);
+    tooltips = new TooltipManager(obj["tooltips"]);
   }
 
   Workspace workspace;
@@ -124,9 +114,9 @@ class Atom {
   Clipboard clipboard;
   ContextMenuManager contextMenu;
   TooltipManager tooltips;
-  Project get project => new Project(o["project"]);
+  Project get project => new Project(obj["project"]);
   NotificationManager get notifications =>
-      new NotificationManager(o['notifications']);
+      new NotificationManager(obj['notifications']);
 
   void open(List<String> paths, {bool newWindow, bool devMode, bool safeMode}) {
     var opts = omap({
@@ -136,32 +126,28 @@ class Atom {
       "safeMode": safeMode
     });
 
-    o.callMethod("open", [opts]);
+    invoke("open", opts);
   }
 
-  void reopenItem() => o.callMethod("reopenItem");
+  void reopenItem() => invoke("reopenItem");
 
   Disposable onDidBeep(Action callback) {
-    return new Disposable(o.callMethod("onDidBeep", [callback]));
+    return new Disposable(invoke("onDidBeep", callback));
   }
 
-  void close() {
-    o.callMethod("close");
-  }
+  void close() => invoke("close");
 
-  WindowSize get size => new WindowSize.fromJS(o.callMethod("getSize"));
+  WindowSize get size => new WindowSize.fromJS(invoke("getSize"));
   set size(WindowSize size) {
-    o.callMethod("setSize", [size.width, size.height]);
+    invoke("setSize", size.width, size.height);
   }
 
-  Position get position => new Position.fromJS(o.callMethod("getPosition"));
+  Position get position => new Position.fromJS(invoke("getPosition"));
   set position(Position pos) {
-    o.callMethod("setPosition", [pos.x, pos.y]);
+    invoke("setPosition", pos.x, pos.y);
   }
 
-  void beep() {
-    o.callMethod("beep");
-  }
+  void beep() => invoke("beep");
 
   int confirm(String message, {String detailedMessage, buttons}) {
     if (buttons != null) {
@@ -171,49 +157,46 @@ class Atom {
       }
     }
 
-    return o.callMethod("confirm", [
+    return invoke("confirm",
       omap({
         "message": message,
         "detailedMessage": detailedMessage,
         "buttons": buttons
       })
-    ]);
+    );
   }
 
-  bool get isDevMode => o.callMethod("isDevMode");
-  bool get isSafeMode => o.callMethod("isSafeMode");
-  bool get isSpecMode => o.callMethod("isSpecMode");
+  bool get isDevMode => invoke("isDevMode");
+  bool get isSafeMode => invoke("isSafeMode");
+  bool get isSpecMode => invoke("isSpecMode");
 
-  String get version => o.callMethod("getVersion");
-  bool get isReleasedVersion => o.callMethod("isReleasedVersion");
+  String get version => invoke("getVersion");
+  bool get isReleasedVersion => invoke("isReleasedVersion");
 
-  num get windowLoadTime => o.callMethod("getWindowLoadTime");
+  num get windowLoadTime => invoke("getWindowLoadTime");
 
-  void openDevTools() => o.callMethod("openDevTools");
-  void toggleDevTools() => o.callMethod("toggleDevTools");
+  void openDevTools() => invoke("openDevTools");
+  void toggleDevTools() => invoke("toggleDevTools");
   void executeJavaScriptInDevTools(String code) =>
-      o.callMethod("executeJavaScriptInDevTools", [code]);
+      invoke("executeJavaScriptInDevTools", code);
 
-  void show() => o.callMethod("show");
-  void hide() => o.callMethod("hide");
-  void center() => o.callMethod("center");
-  void reload() => o.callMethod("reload");
-  bool get isMaximized => o.callMethod("isMaximized");
-  bool get isFullscreen => o.callMethod("isFullscreen");
-  set isFullscreen(bool value) => o.callMethod("setFullscreen", [value]);
-  bool toggleFullscreen() => o.callMethod("toggleFullscreen");
+  void show() => invoke("show");
+  void hide() => invoke("hide");
+  void center() => invoke("center");
+  void reload() => invoke("reload");
+  bool get isMaximized => invoke("isMaximized");
+  bool get isFullscreen => invoke("isFullscreen");
+  set isFullscreen(bool value) => invoke("setFullscreen", value);
+  bool toggleFullscreen() => invoke("toggleFullscreen");
 }
 
 final Console console = new Console();
 
-class Console {
-  void log(String text) {
-    js.context["console"].callMethod("log", [text]);
-  }
+class Console extends ProxyHolder {
+  Console() : super(global["console"]);
 
-  void error(String text) {
-    js.context["console"].callMethod("error", [text]);
-  }
+  void log(String text) => invoke("log", text);
+  void error(String text) => invoke("error", text);
 }
 
 class WindowSize {
@@ -232,12 +215,8 @@ class Position {
   Position.fromJS(js.JsObject obj) : this(obj["x"], obj["y"]);
 }
 
-class Disposable {
-  final js.JsObject obj;
+class Disposable extends ProxyHolder {
+  Disposable(js.JsObject obj) : super(obj);
 
-  Disposable(this.obj);
-
-  void dispose() {
-    obj.callMethod("dispose");
-  }
+  void dispose() => invoke("dispose");
 }

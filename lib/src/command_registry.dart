@@ -1,11 +1,9 @@
 part of atom;
 
-class CommandRegistry {
-  final js.JsObject o;
-
-  CommandRegistry(this.o);
+class CommandRegistry extends ProxyHolder {
+  CommandRegistry(js.JsObject obj) : super(obj);
 
   Disposable add(String target, String command, void callback(event)) {
-    return new Disposable(o.callMethod("add", [target, command, callback]));
+    return new Disposable(invoke("add", target, command, callback));
   }
 }

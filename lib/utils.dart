@@ -9,6 +9,8 @@ Map<String, dynamic> omap(Map<String, dynamic> map) {
   return copy;
 }
 
+js.JsObject jsify(Map map) => new js.JsObject.jsify(map);
+
 Future promiseToFuture(promise) {
   if (promise is js.JsObject) {
     promise = new Promise(promise);
@@ -45,5 +47,26 @@ class Promise {
 
   void catchError(Function func) {
     obj.callMethod("catch", [func]);
+  }
+}
+
+abstract class ProxyHolder extends Object {
+  final js.JsObject obj;
+  ProxyHolder(this.obj);
+
+  dynamic invoke(String method, [dynamic arg1, dynamic arg2, dynamic arg3]) {
+    if (arg1 is Map) arg1 = jsify(arg1);
+    if (arg2 is Map) arg2 = jsify(arg2);
+    if (arg3 is Map) arg3 = jsify(arg3);
+
+    if (arg3 != null) {
+      return obj.callMethod(method, [arg1, arg2, arg3]);
+    } else if (arg2 != null) {
+      return obj.callMethod(method, [arg1, arg2]);
+    } else if (arg2 != null) {
+      return obj.callMethod(method, [arg1]);
+    } else {
+      return obj.callMethod(method);
+    }
   }
 }

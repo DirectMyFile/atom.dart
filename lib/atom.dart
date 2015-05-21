@@ -29,22 +29,3 @@ part "src/workspace.dart";
 
 js.JsObject require(String input) => js.context.callMethod("require", [input]);
 js.JsObject get global => js.context;
-
-js.JsObject jsify(Map map) => new js.JsObject.jsify(map);
-
-abstract class ProxyHolder extends Object {
-  final js.JsObject obj;
-  ProxyHolder(this.obj);
-
-  dynamic invoke(String method, [dynamic arg1, dynamic arg2, dynamic arg3]) {
-    if (arg3 != null) {
-      return obj.callMethod(method, [arg1, arg2, arg3]);
-    } else if (arg2 != null) {
-      return obj.callMethod(method, [arg1, arg2]);
-    } else if (arg2 != null) {
-      return obj.callMethod(method, [arg1]);
-    } else {
-      return obj.callMethod(method);
-    }
-  }
-}

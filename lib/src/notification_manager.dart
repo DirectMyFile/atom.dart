@@ -1,9 +1,7 @@
 part of atom;
 
-class NotificationManager {
-  final js.JsObject obj;
-
-  NotificationManager(this.obj);
+class NotificationManager extends ProxyHolder {
+  NotificationManager(js.JsObject obj) : super(obj);
 
   // Events
   // Stream get onDidAddNotification;
@@ -14,27 +12,22 @@ class NotificationManager {
 
   // Adding Notifications
   void addSuccess(String message, Map options) {
-    var optionsJsObj = jsify(options);
-    obj.callMethod('addSuccess', [message, optionsJsObj]);
+    invoke('addSuccess', message, options);
   }
 
   void addInfo(String message, Map options) {
-    var optionsJsObj = jsify(options);
-    obj.callMethod('addInfo', [message, optionsJsObj]);
+    invoke('addInfo', message, options);
   }
 
   void addWarning(String message, Map options) {
-    var optionsJsObj = jsify(options);
-    obj.callMethod('addWarning', [message, optionsJsObj]);
+    invoke('addWarning', message, options);
   }
 
   void addError(String message, Map options) {
-    var optionsJsObj = jsify(options);
-    obj.callMethod('addError', [message, optionsJsObj]);
+    invoke('addError', message, options);
   }
 
   void addFatalError(String message, Map options) {
-    var optionsJsObj = jsify(options);
-    obj.callMethod('addFatalError', [message, optionsJsObj]);
+    invoke('addFatalError', message, options);
   }
 }
