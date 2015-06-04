@@ -64,7 +64,7 @@ abstract class ProxyHolder extends Object {
       return obj.callMethod(method, [arg1, arg2, arg3]);
     } else if (arg2 != null) {
       return obj.callMethod(method, [arg1, arg2]);
-    } else if (arg2 != null) {
+    } else if (arg1 != null) {
       return obj.callMethod(method, [arg1]);
     } else {
       return obj.callMethod(method);
