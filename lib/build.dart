@@ -150,4 +150,6 @@ self.window = window;
 self.atom = atom;
 self.exports = exports;
 self.Object = Object;
+self.setTimeout = function(f, millis) { window.setTimeout(f, millis); };
+
 """;
